@@ -6,12 +6,23 @@ import java.util.Objects;
 
 public class AppFrame extends JFrame {
     private Dimension windowSize;
+    private final JPanel mainPanel;
 
     public AppFrame() {
         super("Sudoku");
 
         this.initFrame();
         this.initMenuBar();
+
+        this.mainPanel = new JPanel();
+
+        NumberButton testbutton = new NumberButton("0");
+        testbutton.setUI(new RoundButtonUI(testbutton.getColor()));
+        mainPanel.add(testbutton);
+
+        mainPanel.setBackground(new Color(24, 25, 27));
+
+        this.add(mainPanel, BorderLayout.CENTER);
 
         this.pack();
     }
@@ -26,7 +37,6 @@ public class AppFrame extends JFrame {
         this.setMinimumSize(windowSize);
         this.setPreferredSize(windowSize);
         this.setLocationRelativeTo(null);
-        this.getContentPane().setBackground(Color.DARK_GRAY);
     }
 
     private void initMenuBar() {
