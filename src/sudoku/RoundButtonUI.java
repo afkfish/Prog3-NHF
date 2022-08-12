@@ -16,7 +16,7 @@ public class RoundButtonUI extends BasicButtonUI {
     public void update(Graphics g, JComponent c) {
         if (c.isOpaque()) {
             g.setColor(this.color);
-            g.fillRoundRect(0, 0, c.getWidth(),c.getHeight(), 100, 100);
+            g.fillRoundRect(0, 0, c.getWidth(),c.getHeight(), 50, 50);
         }
         paint(g, c);
     }

@@ -14,15 +14,31 @@ public class AppFrame extends JFrame {
         this.initFrame();
         this.initMenuBar();
 
-        this.mainPanel = new JPanel();
+        JPanel tt = new JPanel();
+        JLabel title = new JLabel("Sudoku v0.5");
+        tt.add(title);
+        tt.setBackground(new Color(24, 25, 27));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setForeground(new Color(255,255,255));
+        this.add(tt, BorderLayout.NORTH);
 
-        NumberButton testbutton = new NumberButton("0");
-        testbutton.setUI(new RoundButtonUI(testbutton.getColor()));
-        mainPanel.add(testbutton);
+        this.mainPanel = new JPanel(new GridLayout(9, 9));
+        ButtonContainer container = new ButtonContainer(this.mainPanel, 9);
+        mainPanel.setPreferredSize(new Dimension(300,300));
+
+        JPanel border0 = new JPanel();
+        border0.setPreferredSize(new Dimension((this.getWidth()-300)/4, this.getHeight()));
+        JPanel border1 = new JPanel();
+        border1.setPreferredSize(new Dimension((this.getWidth()-300)/4, this.getHeight()));
+        border0.setBackground(new Color(24, 25, 27));
+        border1.setBackground(new Color(24, 25, 27));
 
         mainPanel.setBackground(new Color(24, 25, 27));
+        mainPanel.setPreferredSize(new Dimension(300,300));
 
-        this.add(mainPanel, BorderLayout.CENTER);
+        this.add(border0, BorderLayout.WEST);
+        this.add(mainPanel);
+        this.add(border1, BorderLayout.EAST);
 
         this.pack();
     }

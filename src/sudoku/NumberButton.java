@@ -15,10 +15,12 @@ public class NumberButton extends JButton {
         this.number = 0;
         this.color = new Color(86, 86, 86);
 
-        this.setPreferredSize(new Dimension(100, 100));
+        this.setPreferredSize(new Dimension(50, 50));
         this.setBackground(new Color(24, 25, 27));
         this.setAlignmentY(0.5F);
         this.setOpaque(true);
+
+        this.setUI(new RoundButtonUI(this.color));
 
         this.addActionListener(actionEvent -> this.changePressState());
     }
@@ -37,6 +39,7 @@ public class NumberButton extends JButton {
 
     public void setColor(Color color) {
         this.color = color;
+        this.setUI(new RoundButtonUI(this.color));
     }
 
     public void changePressState(){
