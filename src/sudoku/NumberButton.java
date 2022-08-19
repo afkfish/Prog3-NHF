@@ -2,8 +2,10 @@ package sudoku;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class NumberButton extends JButton {
+public class NumberButton extends JButton implements KeyListener {
     private boolean pressState;
     private int number;
     private Color color;
@@ -15,10 +17,13 @@ public class NumberButton extends JButton {
         this.number = 0;
         this.color = new Color(86, 86, 86);
 
-        this.setPreferredSize(new Dimension(50, 50));
+        this.addKeyListener(this);
+
+        this.setPreferredSize(new Dimension(25, 25));
         this.setBackground(new Color(24, 25, 27));
         this.setAlignmentY(0.5F);
         this.setOpaque(true);
+        this.setForeground(new Color(255, 255, 255));
 
         this.setUI(new RoundButtonUI(this.color));
 
@@ -47,10 +52,28 @@ public class NumberButton extends JButton {
         if(this.pressState) {
             this.color = new Color(139, 239, 99, 166);
         } else {
-            this.color = new Color(122, 154, 116);
+            this.color = new Color(86, 86, 86);
         }
-        this.number += 1;
-        this.setText(String.valueOf(this.number));
         this.setUI(new RoundButtonUI(this.color));
+    }
+
+    @Override
+    public void keyTyped(KeyEvent event) {
+        int n = Character.getNumericValue(event.getKeyChar());
+        if(n > 0 && n < 10 && this.pressState) {
+            this.number = n;
+            this.setText(String.valueOf(this.number));
+        }
+        this.changePressState();
+    }
+
+    @Override
+    public void keyPressed(KeyEvent event) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent event) {
+
     }
 }

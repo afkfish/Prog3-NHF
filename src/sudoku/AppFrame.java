@@ -22,14 +22,12 @@ public class AppFrame extends JFrame {
         title.setForeground(new Color(255,255,255));
         this.add(tt, BorderLayout.NORTH);
 
-        this.mainPanel = new JPanel(new GridLayout(9, 9));
-        ButtonContainer container = new ButtonContainer(this.mainPanel, 9);
-        mainPanel.setPreferredSize(new Dimension(300,300));
+        this.mainPanel = new ButtonContainer(9);
 
         JPanel border0 = new JPanel();
-        border0.setPreferredSize(new Dimension((this.getWidth()-300)/4, this.getHeight()));
+        border0.setPreferredSize(new Dimension((this.getWidth()-300)/3, this.getHeight()));
         JPanel border1 = new JPanel();
-        border1.setPreferredSize(new Dimension((this.getWidth()-300)/4, this.getHeight()));
+        border1.setPreferredSize(new Dimension((this.getWidth()-300)/3, this.getHeight()));
         border0.setBackground(new Color(24, 25, 27));
         border1.setBackground(new Color(24, 25, 27));
 
