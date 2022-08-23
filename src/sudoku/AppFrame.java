@@ -5,87 +5,84 @@ import java.awt.*;
 import java.util.Objects;
 
 public class AppFrame extends JFrame {
-    private Dimension windowSize;
-    private final JPanel mainPanel;
+	private Dimension windowSize;
+	private final JPanel mainPanel;
 
-    public AppFrame() {
-        super("Sudoku");
+	public AppFrame() {
+		super("Sudoku v0.6");
 
-        this.initFrame();
-        this.initMenuBar();
+		Color bgcolor = new Color(24, 25, 27);
 
-        JPanel tt = new JPanel();
-        JLabel title = new JLabel("Sudoku v0.5");
-        tt.add(title);
-        tt.setBackground(new Color(24, 25, 27));
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setForeground(new Color(255,255,255));
-        this.add(tt, BorderLayout.NORTH);
+		this.initFrame();
+		this.initMenuBar();
 
-        this.mainPanel = new ButtonContainer(9);
+		this.mainPanel = new ButtonContainer();
 
-        JPanel border0 = new JPanel();
-        border0.setPreferredSize(new Dimension((this.getWidth()-300)/3, this.getHeight()));
-        JPanel border1 = new JPanel();
-        border1.setPreferredSize(new Dimension((this.getWidth()-300)/3, this.getHeight()));
-        border0.setBackground(new Color(24, 25, 27));
-        border1.setBackground(new Color(24, 25, 27));
+		JPanel border0 = new JPanel();
+		border0.setPreferredSize(new Dimension((this.windowSize.width-600)/2, this.windowSize.height));
+		JPanel border1 = new JPanel();
+		border1.setPreferredSize(new Dimension((this.windowSize.width-600)/2, this.windowSize.height));
+		JPanel border2 = new JPanel();
+		border2.setPreferredSize(new Dimension(this.windowSize.width, this.windowSize.height-600));
+		border0.setBackground(bgcolor);
+		border1.setBackground(bgcolor);
+		border2.setBackground(bgcolor);
 
-        mainPanel.setBackground(new Color(24, 25, 27));
-        mainPanel.setPreferredSize(new Dimension(300,300));
+		mainPanel.setBackground(bgcolor);
+		mainPanel.setPreferredSize(new Dimension(600,600));
 
-        this.add(border0, BorderLayout.WEST);
-        this.add(mainPanel);
-        this.add(border1, BorderLayout.EAST);
+		this.add(border0, BorderLayout.WEST);
+		this.add(mainPanel);
+		this.add(border1, BorderLayout.EAST);
+		this.add(border2, BorderLayout.SOUTH);
 
-        this.pack();
-    }
-    public static void main(String[] args) {
-        AppFrame appFrame = new AppFrame();
-        appFrame.setVisible(true);
+		this.pack();
+	}
+	public static void main(String[] args) {
+		AppFrame appFrame = new AppFrame();
+		appFrame.setVisible(true);
 
-        Puzzle puz = new Puzzle();
-        int[][] board = puz.generate();
+		Puzzle puz = new Puzzle();
+		int[][] board = puz.generate();
 
-        for (int i = 0; i < 9; i++) {
-            System.out.println(' ');
-            for (int j = 0; j < 9; j++) {
-                System.out.print(board[i][j]);
+		for (int i = 0; i < 9; i++) {
+			System.out.println(' ');
+			for (int j = 0; j < 9; j++) {
+				System.out.print(board[i][j]);
+			}
+		}
+	}
 
-            }
-        }
-    }
+	private void initFrame() {
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.windowSize = new Dimension(1280, 720);
+		this.setMinimumSize(windowSize);
+		this.setPreferredSize(windowSize);
+		this.setLocationRelativeTo(null);
+	}
 
-    private void initFrame() {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.windowSize = new Dimension(1280, 720);
-        this.setMinimumSize(windowSize);
-        this.setPreferredSize(windowSize);
-        this.setLocationRelativeTo(null);
-    }
+	private void initMenuBar() {
+		if(Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+		}
 
-    private void initMenuBar() {
-        if(Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-        }
+		JMenuBar menuBar = new JMenuBar();
+		JMenu file = new JMenu("File");
 
-        JMenuBar menuBar = new JMenuBar();
-        JMenu file = new JMenu("File");
+		JMenuItem saveGame = new JMenuItem("Save game");
+		JMenuItem loadGame = new JMenuItem("Load game");
+		JMenuItem exportRecords = new JMenuItem("Export records");
+		JMenuItem exit = new JMenuItem("Exit");
+		exit.addActionListener(actionEvent -> System.exit(0));
 
-        JMenuItem saveGame = new JMenuItem("Save game");
-        JMenuItem loadGame = new JMenuItem("Load game");
-        JMenuItem exportRecords = new JMenuItem("Export records");
-        JMenuItem exit = new JMenuItem("Exit");
-        exit.addActionListener(actionEvent -> System.exit(0));
+		file.add(saveGame);
+		file.add(loadGame);
+		file.add(exportRecords);
+		file.addSeparator();
+		file.add(exit);
 
-        file.add(saveGame);
-        file.add(loadGame);
-        file.add(exportRecords);
-        file.addSeparator();
-        file.add(exit);
+		menuBar.add(file);
 
-        menuBar.add(file);
-
-        this.setJMenuBar(menuBar);
-    }
+		this.setJMenuBar(menuBar);
+	}
 }
