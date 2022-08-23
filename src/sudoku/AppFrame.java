@@ -43,6 +43,17 @@ public class AppFrame extends JFrame {
     public static void main(String[] args) {
         AppFrame appFrame = new AppFrame();
         appFrame.setVisible(true);
+
+        Puzzle puz = new Puzzle();
+        int[][] board = puz.generate();
+
+        for (int i = 0; i < 9; i++) {
+            System.out.println(' ');
+            for (int j = 0; j < 9; j++) {
+                System.out.print(board[i][j]);
+
+            }
+        }
     }
 
     private void initFrame() {
