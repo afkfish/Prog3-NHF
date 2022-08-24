@@ -8,50 +8,40 @@ public class AppFrame extends JFrame {
 	private Dimension windowSize;
 	private final JPanel mainPanel;
 
-	public AppFrame() {
-		super("Sudoku v0.6");
+	public AppFrame(Game game) {
+		super("Sudoku v0.8");
 
 		Color bgcolor = new Color(24, 25, 27);
 
 		this.initFrame();
 		this.initMenuBar();
 
-		this.mainPanel = new ButtonContainer();
+		this.mainPanel = game.getContainer();
 
 		JPanel border0 = new JPanel();
 		border0.setPreferredSize(new Dimension((this.windowSize.width-600)/2, this.windowSize.height));
 		JPanel border1 = new JPanel();
 		border1.setPreferredSize(new Dimension((this.windowSize.width-600)/2, this.windowSize.height));
 		JPanel border2 = new JPanel();
-		border2.setPreferredSize(new Dimension(this.windowSize.width, this.windowSize.height-600));
+		border2.setPreferredSize(new Dimension(this.windowSize.width, (this.windowSize.height-600)/2));
+		JPanel border3 = new JPanel();
+		border3.setPreferredSize(new Dimension(this.windowSize.width, (this.windowSize.height-600)/2));
 		border0.setBackground(bgcolor);
 		border1.setBackground(bgcolor);
 		border2.setBackground(bgcolor);
+		border3.setBackground(bgcolor);
 
 		mainPanel.setBackground(bgcolor);
 		mainPanel.setPreferredSize(new Dimension(600,600));
 
 		this.add(border0, BorderLayout.WEST);
-		this.add(mainPanel);
+		this.add(mainPanel, BorderLayout.CENTER);
 		this.add(border1, BorderLayout.EAST);
 		this.add(border2, BorderLayout.SOUTH);
+		this.add(border3, BorderLayout.NORTH);
 
-		this.pack();
-	}
-	public static void main(String[] args) {
-		AppFrame appFrame = new AppFrame();
-		appFrame.setVisible(true);
-
-		Puzzle puz = new Puzzle();
-		int[][] board = puz.generate();
-
-		for (int i = 0; i < 9; i++) {
-			System.out.println(' ');
-			for (int j = 0; j < 9; j++) {
-				System.out.print(board[i][j]);
-			}
-		}
-	}
+        this.pack();
+    }
 
 	private void initFrame() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

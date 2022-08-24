@@ -1,23 +1,36 @@
 package sudoku;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class NumberButton extends JButton implements KeyListener {
+public class NumberButton extends JButton {
+	private final int row;
+	private final int col;
+	private final Grid active;
+	private final Grid solved;
 	private boolean pressState;
 	private int number;
 	private Color color;
 
-	public NumberButton(String title) {
-		super(title);
+	public NumberButton(int row, int col, Grid active, Grid solved) {
+		super();
+
+		this.row = row;
+		this.col = col;
+		this.active = active;
+		this.solved = solved;
+		this.number = active.getCell(row, col).getValue();
 
 		this.pressState = false;
-		this.number = 0;
 		this.color = new Color(86, 86, 86);
 
-		this.addKeyListener(this);
+		if (this.number == 0)
+			this.setText(null);
+		else
+			this.setText(String.valueOf(this.number));
+
+		this.addKeyListener(new ChangeListener());
 
 		this.setPreferredSize(new Dimension(25, 25));
 		this.setBackground(new Color(24, 25, 27));
@@ -25,9 +38,37 @@ public class NumberButton extends JButton implements KeyListener {
 		this.setOpaque(true);
 		this.setForeground(new Color(255, 255, 255));
 
-		this.setUI(new RoundButtonUI(this.color));
+		if (this.number != 0) {
+			this.setEnabled(false);
+			this.setUI(new MetalButtonUI() {
+				@Override
+				protected Color getDisabledTextColor() {
+					return Color.WHITE;
+				}
+			});
+		} else {
+			this.setUI(new RoundButtonUI(this.color));
+		}
 
-		this.addActionListener(actionEvent -> this.changePressState());
+		this.addActionListener(actionEvent -> {
+			this.changePressState();
+		});
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getCol() {
+		return col;
+	}
+
+	public Grid getActiveGrid() {
+		return active;
+	}
+
+	public Grid getSolvedGrid() {
+		return solved;
 	}
 
 	public int getNumber() {
@@ -35,8 +76,7 @@ public class NumberButton extends JButton implements KeyListener {
 	}
 
 	public void setNumber(int number) {
-		if (number > 0 && number < 10)
-			this.number = number;
+		this.number = number;
 	}
 
 	public Color getColor() {
@@ -48,7 +88,11 @@ public class NumberButton extends JButton implements KeyListener {
 		this.setUI(new RoundButtonUI(this.color));
 	}
 
-	public void changePressState(){
+	public boolean getPressState() {
+		return this.pressState;
+	}
+
+	public void changePressState() {
 		this.pressState = !this.pressState;
 		if(this.pressState) {
 			this.color = new Color(139, 239, 99, 166);
@@ -56,28 +100,5 @@ public class NumberButton extends JButton implements KeyListener {
 			this.color = new Color(86, 86, 86);
 		}
 		this.setUI(new RoundButtonUI(this.color));
-	}
-
-	@Override
-	public void keyTyped(KeyEvent event) {
-		int n = Character.getNumericValue(event.getKeyChar());
-		if(n > 0 && n < 10 && this.pressState) {
-			this.number = n;
-			this.setText(String.valueOf(this.number));
-		} else if (event.getKeyChar() == KeyEvent.VK_ESCAPE) {
-			this.number = 0;
-			this.setText("");
-		}
-		this.changePressState();
-	}
-
-	@Override
-	public void keyPressed(KeyEvent event) {
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent event) {
-
 	}
 }
