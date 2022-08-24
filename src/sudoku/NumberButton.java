@@ -36,6 +36,7 @@ public class NumberButton extends JButton {
 		this.setBackground(new Color(24, 25, 27));
 		this.setAlignmentY(0.5F);
 		this.setOpaque(true);
+		this.setFont(new Font("arial", Font.PLAIN, 20));
 		this.setForeground(new Color(255, 255, 255));
 
 		if (this.number != 0) {

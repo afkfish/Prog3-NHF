@@ -6,12 +6,14 @@ import java.util.Objects;
 
 public class AppFrame extends JFrame {
 	private Dimension windowSize;
-	private final JPanel mainPanel;
+	private JPanel mainPanel;
+
+	public static int hardness = 0;
 
 	public AppFrame(Game game) {
 		super("Sudoku v0.8");
 
-		Color bgcolor = new Color(24, 25, 27);
+		Color bgColor = new Color(24, 25, 27);
 
 		this.initFrame();
 		this.initMenuBar();
@@ -26,12 +28,12 @@ public class AppFrame extends JFrame {
 		border2.setPreferredSize(new Dimension(this.windowSize.width, (this.windowSize.height-600)/2));
 		JPanel border3 = new JPanel();
 		border3.setPreferredSize(new Dimension(this.windowSize.width, (this.windowSize.height-600)/2));
-		border0.setBackground(bgcolor);
-		border1.setBackground(bgcolor);
-		border2.setBackground(bgcolor);
-		border3.setBackground(bgcolor);
+		border0.setBackground(bgColor);
+		border1.setBackground(bgColor);
+		border2.setBackground(bgColor);
+		border3.setBackground(bgColor);
 
-		mainPanel.setBackground(bgcolor);
+		mainPanel.setBackground(bgColor);
 		mainPanel.setPreferredSize(new Dimension(600,600));
 
 		this.add(border0, BorderLayout.WEST);
@@ -59,20 +61,65 @@ public class AppFrame extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu file = new JMenu("File");
 
+		JMenuItem newGame = new JMenuItem("New game");
+		newGame.addActionListener(actionEvent -> {
+			Game game = new Game();
+			setGame(game);
+		});
 		JMenuItem saveGame = new JMenuItem("Save game");
 		JMenuItem loadGame = new JMenuItem("Load game");
 		JMenuItem exportRecords = new JMenuItem("Export records");
+		JMenuItem preferences = new JMenuItem("Preferences");
+		preferences.addActionListener(actionEvent -> {
+			JDialog settings = new JDialog(this, "Preferences", true);
+			settings.getContentPane().setBackground(new Color(24, 25, 27));
+			settings.setMinimumSize(new Dimension(300, 100));
+			settings.setLocationRelativeTo(this);
+			JLabel hardnessLabel = new JLabel("Game hardness level:  " + AppFrame.hardness);
+			hardnessLabel.setHorizontalAlignment(0);
+			hardnessLabel.setFont(new Font("font1", Font.PLAIN, 20));
+			hardnessLabel.setForeground(Color.WHITE);
+			JSlider slider = new JSlider(0, 10);
+			slider.setMaximumSize(new Dimension(200, 100));
+			slider.setValue(AppFrame.hardness);
+			slider.setSnapToTicks(true);
+			slider.addChangeListener(changeEvent -> {
+				AppFrame.setHardness(slider.getValue());
+				hardnessLabel.setText("Game hardness level:  " + AppFrame.hardness);
+			});
+			settings.add(hardnessLabel, BorderLayout.NORTH);
+			settings.add(slider);
+			settings.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			settings.validate();
+			settings.setVisible(true);
+		});
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.addActionListener(actionEvent -> System.exit(0));
 
+		file.add(newGame);
 		file.add(saveGame);
 		file.add(loadGame);
 		file.add(exportRecords);
+		file.addSeparator();
+		file.add(preferences);
 		file.addSeparator();
 		file.add(exit);
 
 		menuBar.add(file);
 
 		this.setJMenuBar(menuBar);
+	}
+
+	public static void setHardness(int hardness) {
+		AppFrame.hardness = Math.abs(hardness % 11);
+	}
+
+	public void setGame(Game game) {
+		Container contain = getContentPane();
+		contain.remove(this.mainPanel);
+		this.mainPanel = game.getContainer();
+		contain.add(mainPanel, BorderLayout.CENTER);
+		validate();
+		setVisible(true);
 	}
 }

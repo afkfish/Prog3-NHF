@@ -8,7 +8,6 @@ public class ButtonContainer extends JPanel{
 
     ButtonContainer(Grid active, Grid solved) {
         super(new GridLayout(9,9));
-        this.setBorder(new RoundedBorder(10, Color.GRAY));
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 NumberButton b = new NumberButton(i, j, active, solved);
@@ -57,14 +56,5 @@ public class ButtonContainer extends JPanel{
                 this.add(buttons[i][j]);
             }
         }
-    }
-    public int[][] getPuzzleState() {
-        int[][] puzzle = new int[9][9];
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                puzzle[i][j] = buttons[i][j].getNumber();
-            }
-        }
-        return puzzle;
     }
 }
