@@ -4,6 +4,10 @@ import javax.swing.*;
 import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.*;
 
+/**
+ * This class represents a single {@link JButton} with a number on it which is determined by the {@link Grid.Cell}s
+ * value that is in the same {@link #row} and {@link #col}umn as the button.
+ */
 public class NumberButton extends JButton {
 	private final int row;
 	private final int col;
@@ -13,6 +17,13 @@ public class NumberButton extends JButton {
 	private int number;
 	private Color color;
 
+	/**
+	 * Constructor for a {@link NumberButton}.
+	 * @param row the row position of the button
+	 * @param col the column position of the button
+	 * @param active the {@link Game}'s active {@link Grid} which the player can modify
+	 * @param solved the solution {@link Grid} that will be compared
+	 */
 	public NumberButton(int row, int col, Grid active, Grid solved) {
 		super();
 
@@ -23,23 +34,13 @@ public class NumberButton extends JButton {
 		this.number = active.getCell(row, col).getValue();
 
 		this.pressState = false;
-		this.color = new Color(86, 86, 86);
+		this.color = new Color(46, 58, 63);
 
-		if (this.number == 0)
+		if (this.number == 0) {
 			this.setText(null);
-		else
+			this.setUI(new RoundButtonUI(this.color));
+		} else {
 			this.setText(String.valueOf(this.number));
-
-		this.addKeyListener(new ChangeListener());
-
-		this.setPreferredSize(new Dimension(25, 25));
-		this.setBackground(new Color(24, 25, 27));
-		this.setAlignmentY(0.5F);
-		this.setOpaque(true);
-		this.setFont(new Font("arial", Font.PLAIN, 20));
-		this.setForeground(new Color(255, 255, 255));
-
-		if (this.number != 0) {
 			this.setEnabled(false);
 			this.setUI(new MetalButtonUI() {
 				@Override
@@ -47,13 +48,18 @@ public class NumberButton extends JButton {
 					return Color.WHITE;
 				}
 			});
-		} else {
-			this.setUI(new RoundButtonUI(this.color));
 		}
 
-		this.addActionListener(actionEvent -> {
-			this.changePressState();
-		});
+		this.addKeyListener(new ChangeListener());
+
+		this.setPreferredSize(new Dimension(25, 25));
+		this.setBackground(new Color(29, 37, 40));
+		this.setAlignmentY(0.5F);
+		this.setOpaque(true);
+		this.setFont(new Font("arial", Font.PLAIN, 20));
+		this.setForeground(new Color(255, 255, 255));
+
+		this.addActionListener(actionEvent -> this.changePressState());
 	}
 
 	public int getRow() {
@@ -80,15 +86,6 @@ public class NumberButton extends JButton {
 		this.number = number;
 	}
 
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-		this.setUI(new RoundButtonUI(this.color));
-	}
-
 	public boolean getPressState() {
 		return this.pressState;
 	}
@@ -98,7 +95,7 @@ public class NumberButton extends JButton {
 		if(this.pressState) {
 			this.color = new Color(139, 239, 99, 166);
 		} else {
-			this.color = new Color(86, 86, 86);
+			this.color = new Color(39, 49, 54);
 		}
 		this.setUI(new RoundButtonUI(this.color));
 	}

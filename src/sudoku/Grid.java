@@ -10,7 +10,6 @@ import java.util.Optional;
  * {@link Cell}s.
  */
 public class Grid {
-
 	private final Cell[][] grid;
 
 	private Grid(Cell[][] grid) {
@@ -45,9 +44,9 @@ public class Grid {
 		List<List<Cell>> boxes = new ArrayList<>();
 
 		for (int i = 0; i < 9; i++) {
-			rows.add(new ArrayList<Cell>());
-			columns.add(new ArrayList<Cell>());
-			boxes.add(new ArrayList<Cell>());
+			rows.add(new ArrayList<>());
+			columns.add(new ArrayList<>());
+			boxes.add(new ArrayList<>());
 		}
 
 		Cell lastCell = null;
@@ -97,6 +96,13 @@ public class Grid {
 		return new Grid(cells);
 	}
 
+	/**
+	 * Compares two given {@link Grid}s whether they contain the same numbers.
+	 *
+	 * @param grid1 the first {@link Grid}
+	 * @param grid2 the second {@link Grid}
+	 * @return boolean
+	 */
 	public static boolean compare(Grid grid1, Grid grid2) {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -108,6 +114,11 @@ public class Grid {
 		return true;
 	}
 
+	/**
+	 * Checks whether a {@link Grid}'s {@link Cell}s are all have numbers in them.
+	 *
+	 * @return boolean
+	 */
 	public boolean isFullGrid() {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -261,8 +272,7 @@ public class Grid {
 	}
 
 	/**
-	 * This class represents a Cell within a Sudoku {@link Grid}. <br><br> It features a couple of
-	 * convenient methods.
+	 * This class represents a Cell within a Sudoku {@link Grid}.
 	 */
 	public static class Cell {
 		private int value;
@@ -304,7 +314,7 @@ public class Grid {
 		}
 
 		/**
-		 * Returns a {@link Collection} of all other Cells in the same row than this Cell.
+		 * Returns a {@link Collection} of all other Cells in the same row, than this Cell.
 		 *
 		 * @return a {@link Collection} of row neighbors
 		 */
@@ -322,7 +332,7 @@ public class Grid {
 		}
 
 		/**
-		 * Returns a {@link Collection} of all other Cells in the same column than this Cell.
+		 * Returns a {@link Collection} of all other Cells in the same column, than this Cell.
 		 *
 		 * @return a {@link Collection} of column neighbors
 		 */
@@ -340,7 +350,7 @@ public class Grid {
 		}
 
 		/**
-		 * Returns a {@link Collection} of all other Cells in the same box than this Cell.
+		 * Returns a {@link Collection} of all other Cells in the same box, than this Cell.
 		 *
 		 * @return a {@link Collection} of box neighbors
 		 */
