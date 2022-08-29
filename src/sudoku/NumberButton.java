@@ -95,7 +95,7 @@ public class NumberButton extends JButton {
 		if(this.pressState) {
 			this.color = new Color(139, 239, 99, 166);
 		} else {
-			this.color = new Color(39, 49, 54);
+			this.color = new Color(46, 58, 63);
 		}
 		this.setUI(new RoundButtonUI(this.color));
 	}

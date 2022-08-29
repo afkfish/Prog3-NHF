@@ -1,18 +1,19 @@
 package sudoku;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
-import javax.swing.plaf.basic.BasicSliderUI;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * This is the {@link JFrame} initializer class. It holds the data for the game's {@link #hardness}.
+ */
 public class AppFrame extends JFrame {
 	private Dimension windowSize;
 	private JPanel mainPanel;
 	public static int hardness = 0;
 
 	public AppFrame(Game game) {
-		super("Sudoku v0.8");
+		super("Sudoku v0.9");
 
 		Color bgColor = new Color(29, 37, 40);
 
@@ -46,6 +47,9 @@ public class AppFrame extends JFrame {
         this.pack();
     }
 
+	/**
+	 * The main frame initializer.
+	 */
 	private void initFrame() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.windowSize = new Dimension(1280, 720);
@@ -54,6 +58,10 @@ public class AppFrame extends JFrame {
 		this.setLocationRelativeTo(null);
 	}
 
+	/**
+	 * Menubar initializer. <br><br/> NOTE: When using the app on macOS the menubar is moved to the top
+	 * menubar.
+	 */
 	private void initMenuBar() {
 		if(Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -73,56 +81,7 @@ public class AppFrame extends JFrame {
 
 		JMenuItem newGame = new JMenuItem("New game");
 		newGame.addActionListener(actionEvent -> {
-			JDialog newGameDialog = new JDialog(this, "New Game", true);
-			newGameDialog.getContentPane().setBackground(menu);
-			newGameDialog.setMinimumSize(new Dimension(400, 300));
-			newGameDialog.setPreferredSize(new Dimension(400, 300));
-			newGameDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			newGameDialog.setLocationRelativeTo(this);
-
-			JLabel hardnessLabel = new JLabel("Game hardness level:  " + AppFrame.hardness);
-			hardnessLabel.setHorizontalAlignment(0);
-			hardnessLabel.setFont(new Font("font1", Font.PLAIN, 20));
-			hardnessLabel.setForeground(Color.WHITE);
-
-			JSlider slider = new JSlider(0, 10, AppFrame.hardness);
-			slider.setPreferredSize(new Dimension(200, 50));
-			slider.setMaximumSize(new Dimension(200, 50));
-			slider.setBackground(menu);
-			slider.setUI(new BasicSliderUI());
-			slider.setSnapToTicks(true);
-			slider.setBorder(null);
-			slider.addChangeListener(changeEvent -> {
-				AppFrame.setHardness(slider.getValue());
-				hardnessLabel.setText("Game hardness level:  " + AppFrame.hardness);
-			});
-
-			JButton submit = new JButton("Start");
-			submit.addActionListener(submitActionEvent -> {
-				newGameDialog.dispose();
-				Game game = new Game();
-				setGame(game);
-			});
-			submit.setMaximumSize(new Dimension(100, 20));
-			submit.setUI(new BasicButtonUI() {
-				@Override
-				public void update(Graphics g, JComponent c) {
-					super.update(g, c);
-					if (c.isOpaque()) {
-						g.setColor(new Color(46, 58, 63));
-						g.fillRect(0, 0, c.getWidth(),c.getHeight());
-					}
-					paint(g, c);
-				}
-			});
-			submit.setBackground(menu);
-			submit.setForeground(Color.WHITE);
-
-			newGameDialog.add(hardnessLabel, BorderLayout.NORTH);
-			newGameDialog.add(slider, BorderLayout.CENTER);
-			newGameDialog.add(submit, BorderLayout.SOUTH);
-
-			newGameDialog.validate();
+			GameDialog newGameDialog = new GameDialog(this);
 			newGameDialog.setVisible(true);
 
 		});

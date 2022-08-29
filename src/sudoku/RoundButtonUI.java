@@ -20,7 +20,7 @@ public class RoundButtonUI extends BasicButtonUI {
 		super.update(g, c);
 		if (c.isOpaque()) {
 			g.setColor(this.color);
-			g.fillRoundRect(0, 0, c.getWidth(), c.getHeight(), 100, 100);
+			g.fillOval(0, 0, c.getWidth(), c.getHeight());
 		}
 		paint(g, c);
 	}

@@ -31,7 +31,7 @@ public class ChangeListener implements KeyListener {
 			JDialog dialog = new JDialog(AppFrame.getFrames()[0], "You won!", true);
 			dialog.setLocationRelativeTo(AppFrame.getFrames()[0]);
 			dialog.setMinimumSize(new Dimension(300, 100));
-			dialog.getContentPane().setBackground(new Color(24, 25, 27));
+			dialog.getContentPane().setBackground(new Color(29, 37, 40));
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 			JLabel label = new JLabel("It took " + ((int) (System.currentTimeMillis() - Game.time) / 1000) + " seconds to solve.");
