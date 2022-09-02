@@ -17,21 +17,22 @@ public class GameDialog extends JDialog {
 		AppFrame.hardness = 2;
 
 		this.setTitle("Start new game");
-		this.getContentPane().setBackground(menu);
-		this.setMinimumSize(new Dimension(400, 300));
-		this.setPreferredSize(new Dimension(400, 300));
-		this.setMaximumSize(new Dimension(400, 300));
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setBackground(menu);
 
 		JLabel hardnessLabel = new JLabel("Game hardness level:  " + AppFrame.hardness);
 		hardnessLabel.setHorizontalAlignment(0);
+		hardnessLabel.setPreferredSize(new Dimension(300, 30));
 		hardnessLabel.setFont(new Font("font1", Font.PLAIN, 20));
 		hardnessLabel.setForeground(Color.WHITE);
+		hardnessLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		JSlider slider = new JSlider(0, 10, AppFrame.hardness);
-		slider.setPreferredSize(new Dimension(200, 50));
-		slider.setMaximumSize(new Dimension(200, 50));
+		slider.setPreferredSize(new Dimension(300, 20));
 		slider.setBackground(menu);
 		slider.setUI(new BasicSliderUI());
 		slider.setSnapToTicks(true);
@@ -40,6 +41,7 @@ public class GameDialog extends JDialog {
 			AppFrame.setHardness(slider.getValue());
 			hardnessLabel.setText("Game hardness level:  " + AppFrame.hardness);
 		});
+		slider.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		JButton submit = new JButton("Start");
 		submit.addActionListener(submitActionEvent -> {
@@ -53,7 +55,7 @@ public class GameDialog extends JDialog {
 				frame.setVisible(true);
 			}
 		});
-		submit.setMaximumSize(new Dimension(100, 20));
+		submit.setPreferredSize(new Dimension(100, 20));
 		submit.setUI(new BasicButtonUI() {
 			@Override
 			public void update(Graphics g, JComponent c) {
@@ -67,11 +69,14 @@ public class GameDialog extends JDialog {
 		});
 		submit.setBackground(menu);
 		submit.setForeground(Color.WHITE);
+		submit.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		this.add(hardnessLabel, BorderLayout.NORTH);
-		this.add(slider, BorderLayout.CENTER);
-		this.add(submit, BorderLayout.SOUTH);
+		panel.add(hardnessLabel);
+		panel.add(slider);
+		panel.add(submit);
 
-		this.validate();
+		this.add(panel, BorderLayout.CENTER);
+		this.pack();
+		this.setLocationRelativeTo(null);
 	}
 }

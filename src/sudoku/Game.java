@@ -14,6 +14,10 @@ public class Game {
 	public static void main(String[] args) {
 		GameDialog startDialog = new GameDialog(null);
 		startDialog.setVisible(true);
+
+		RecordsDialog.records.add(new RecordsDialog.Record(13,1));
+		RecordsDialog.records.add(new RecordsDialog.Record(2,4));
+
 	}
 
 	/**
@@ -29,7 +33,7 @@ public class Game {
 		}
 
 		Grid activeGrid = new Grid(grid);
-		Generator.eraseCells(activeGrid, hardness * 6 + 6);
+		Generator.eraseCells(activeGrid, hardness * 4 + 6);
 
 		this.buttonInitializer = new ButtonInitializer(activeGrid, grid);
 		this.buttonInitializer.setBorder(new LineBorder(Color.GRAY, 2, true));

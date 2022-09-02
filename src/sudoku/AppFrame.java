@@ -109,9 +109,13 @@ public class AppFrame extends JFrame {
 		loadGame.setBackground(menuItem);
 		loadGame.setForeground(Color.WHITE);
 
-		JMenuItem exportRecords = new JMenuItem("Export records");
-		exportRecords.setBackground(menuItem);
-		exportRecords.setForeground(Color.WHITE);
+		JMenuItem records = new JMenuItem("Records");
+		records.addActionListener(actionEvent -> {
+			RecordsDialog recordsDialog = new RecordsDialog(this);
+			recordsDialog.setVisible(true);
+		});
+		records.setBackground(menuItem);
+		records.setForeground(Color.WHITE);
 
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.setBackground(menuItem);
@@ -121,7 +125,7 @@ public class AppFrame extends JFrame {
 		file.add(newGame);
 		file.add(saveGame);
 		file.add(loadGame);
-		file.add(exportRecords);
+		file.add(records);
 		file.addSeparator();
 		file.add(exit);
 

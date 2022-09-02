@@ -28,18 +28,23 @@ public class ChangeListener implements KeyListener {
 		eventParent.changePressState();
 
 		if (Grid.compare(eventParent.getActiveGrid(), eventParent.getSolvedGrid())) {
+			int time = (int) (System.currentTimeMillis() - Game.time) / 1000;
+
+			RecordsDialog.records.add(new RecordsDialog.Record(time, AppFrame.hardness));
+
 			JDialog dialog = new JDialog(AppFrame.getFrames()[0], "You won!", true);
-			dialog.setLocationRelativeTo(AppFrame.getFrames()[0]);
 			dialog.setMinimumSize(new Dimension(300, 100));
 			dialog.getContentPane().setBackground(new Color(29, 37, 40));
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-			JLabel label = new JLabel("It took " + ((int) (System.currentTimeMillis() - Game.time) / 1000) + " seconds to solve.");
+			JLabel label = new JLabel("It took " + time + " seconds to solve.");
 			label.setHorizontalAlignment(SwingConstants.CENTER);
 			label.setVerticalAlignment(SwingConstants.CENTER);
 			label.setForeground(Color.WHITE);
 
 			dialog.add(label);
+			dialog.pack();
+			dialog.setLocationRelativeTo(AppFrame.getFrames()[0]);
 			dialog.setVisible(true);
 		}
 	}
