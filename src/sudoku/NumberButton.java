@@ -62,34 +62,58 @@ public class NumberButton extends JButton {
 		this.addActionListener(actionEvent -> this.changePressState());
 	}
 
+	/**
+	 * @return the row where the button is located
+	 */
 	public int getRow() {
 		return row;
 	}
 
+	/**
+	 * @return the column where the button is located
+	 */
 	public int getCol() {
 		return col;
 	}
 
+	/**
+	 * @return the {@link Game}'s actively changing {@link Grid}
+	 */
 	public Grid getActiveGrid() {
 		return active;
 	}
 
+	/**
+	 * @return the {@link Game}'s solved {@link Grid}
+	 */
 	public Grid getSolvedGrid() {
 		return solved;
 	}
 
+	/**
+	 * @return the number of the button
+	 */
 	public int getNumber() {
 		return number;
 	}
 
+	/**
+	 * @param number the number to set the button to
+	 */
 	public void setNumber(int number) {
 		this.number = number;
 	}
 
+	/**
+	 * @return a boolean representing the button's {@link #pressState}
+	 */
 	public boolean getPressState() {
 		return this.pressState;
 	}
 
+	/**
+	 * Change the {@link #color} and the {@link #pressState} of the button.
+	 */
 	public void changePressState() {
 		this.pressState = !this.pressState;
 		if(this.pressState) {

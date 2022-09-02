@@ -8,10 +8,23 @@ import java.util.Objects;
  * This is the {@link JFrame} initializer class. It holds the data for the game's {@link #hardness}.
  */
 public class AppFrame extends JFrame {
+	/**
+	 * The window's dimensions.
+	 */
 	private Dimension windowSize;
+	/**
+	 * The {@link JPanel} containing the button grid.
+	 */
 	private JPanel mainPanel;
+	/**
+	 * The stored hardness of the current {@link Game}. The difficulty level can be: 0 -> 10
+	 */
 	public static int hardness = 0;
 
+	/**
+	 * Constructor for the {@link JFrame} with the {@link Game} inside.
+	 * @param game the generated game
+	 */
 	public AppFrame(Game game) {
 		super("Sudoku v0.9");
 
@@ -117,10 +130,18 @@ public class AppFrame extends JFrame {
 		this.setJMenuBar(menuBar);
 	}
 
+	/**
+	 * Set the hardness of the upcoming {@link Game}.
+	 * @param hardness difficulty level from 0 -> 10
+	 */
 	public static void setHardness(int hardness) {
 		AppFrame.hardness = Math.abs(hardness % 11);
 	}
 
+	/**
+	 * Set a new {@link Game} to display when the player started a new.
+	 * @param game the generated new {@link Game}
+	 */
 	public void setGame(Game game) {
 		Container contain = getContentPane();
 		contain.remove(this.mainPanel);
