@@ -12,7 +12,7 @@ Részletesebb leírások a [Dokumentációk](https://github.com/afkfish/Prog3-NH
 ### Dokumentációk
 * [Felhasználói dokumentáció](./docs/user_manual.pdf "Felhasználói dokumentáció")
 * [Programozói dokumentáció](./docs/programmer_manual.pdf "Programozói dokumentáció")
-* [Osztályok és metódusok dokumentációja](https://afkfish.github.io/Prog3-NHF "Osztályok és metódusok dokumentációja")
+* [Osztályok és metódusok dokumentációja](https://afkfish.github.io/Prog3-NHF/ "Osztályok és metódusok dokumentációja")
 * [Specifikáció](./docs/specification.pdf "Specifikáció")
 
 ## Képernyőképek
