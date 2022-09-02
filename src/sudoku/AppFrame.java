@@ -1,6 +1,7 @@
 package sudoku;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.util.Objects;
 
@@ -28,9 +29,12 @@ public class AppFrame extends JFrame {
 	public AppFrame(Game game) {
 		super("Sudoku v0.9");
 
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.windowSize = new Dimension(1280, 720);
+		this.setPreferredSize(windowSize);
+
 		Color bgColor = new Color(29, 37, 40);
 
-		this.initFrame();
 		this.initMenuBar();
 
 		this.mainPanel = game.getButtonInitializer();
@@ -58,18 +62,8 @@ public class AppFrame extends JFrame {
 		this.add(border3, BorderLayout.NORTH);
 
         this.pack();
-    }
-
-	/**
-	 * The main frame initializer.
-	 */
-	private void initFrame() {
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.windowSize = new Dimension(1280, 720);
-		this.setMinimumSize(windowSize);
-		this.setPreferredSize(windowSize);
 		this.setLocationRelativeTo(null);
-	}
+    }
 
 	/**
 	 * Menubar initializer. <br><br/> NOTE: When using the app on macOS the menubar is moved to the top
@@ -109,14 +103,6 @@ public class AppFrame extends JFrame {
 		loadGame.setBackground(menuItem);
 		loadGame.setForeground(Color.WHITE);
 
-		JMenuItem records = new JMenuItem("Records");
-		records.addActionListener(actionEvent -> {
-			RecordsDialog recordsDialog = new RecordsDialog(this);
-			recordsDialog.setVisible(true);
-		});
-		records.setBackground(menuItem);
-		records.setForeground(Color.WHITE);
-
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.setBackground(menuItem);
 		exit.setForeground(Color.WHITE);
@@ -125,11 +111,38 @@ public class AppFrame extends JFrame {
 		file.add(newGame);
 		file.add(saveGame);
 		file.add(loadGame);
-		file.add(records);
 		file.addSeparator();
 		file.add(exit);
 
+		JMenu records = new JMenu("Records");
+		records.setBackground(menuItem);
+		records.setForeground(Color.WHITE);
+
+		JMenuItem viewRecords = new JMenuItem("View");
+		viewRecords.addActionListener(actionEvent -> {
+			RecordsDialog recordsDialog = new RecordsDialog(this);
+			recordsDialog.setVisible(true);
+		});
+		viewRecords.setBackground(menuItem);
+		viewRecords.setForeground(Color.WHITE);
+
+		JMenuItem importRecords = new JMenuItem("Import");
+		importRecords.addActionListener(actionEvent -> {
+			JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
+			FileNameExtensionFilter restrict = new FileNameExtensionFilter("Only .dat files", "DAT", "dat");
+			fileChooser.setAcceptAllFileFilterUsed(false);
+			fileChooser.addChoosableFileFilter(restrict);
+			fileChooser.showOpenDialog(this);
+			RecordsDialog.loadRecords(fileChooser.getSelectedFile().getName());
+		});
+		importRecords.setBackground(menuItem);
+		importRecords.setForeground(Color.WHITE);
+
+		records.add(viewRecords);
+		records.add(importRecords);
+
 		menuBar.add(file);
+		menuBar.add(records);
 
 		this.setJMenuBar(menuBar);
 	}

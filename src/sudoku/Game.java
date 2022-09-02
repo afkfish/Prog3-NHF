@@ -15,8 +15,8 @@ public class Game {
 		GameDialog startDialog = new GameDialog(null);
 		startDialog.setVisible(true);
 
-		RecordsDialog.records.add(new RecordsDialog.Record(13,1));
-		RecordsDialog.records.add(new RecordsDialog.Record(2,4));
+		//RecordsDialog.addRecord(13,1);
+		//RecordsDialog.addRecord(2,4);
 
 	}
 

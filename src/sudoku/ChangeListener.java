@@ -30,7 +30,7 @@ public class ChangeListener implements KeyListener {
 		if (Grid.compare(eventParent.getActiveGrid(), eventParent.getSolvedGrid())) {
 			int time = (int) (System.currentTimeMillis() - Game.time) / 1000;
 
-			RecordsDialog.records.add(new RecordsDialog.Record(time, AppFrame.hardness));
+			RecordsDialog.addRecord(time, AppFrame.hardness);
 
 			JDialog dialog = new JDialog(AppFrame.getFrames()[0], "You won!", true);
 			dialog.setMinimumSize(new Dimension(300, 100));
