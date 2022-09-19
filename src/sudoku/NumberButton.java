@@ -36,8 +36,8 @@ public class NumberButton extends JButton {
 		this.pressState = false;
 		this.color = new Color(46, 58, 63);
 
-		if (this.number == 0) {
-			this.setText(null);
+		if (!active.getCell(row, col).isOriginal) {
+			this.setText(this.number == 0 ? null : String.valueOf(this.number));
 			this.setUI(new RoundButtonUI(this.color));
 		} else {
 			this.setText(String.valueOf(this.number));

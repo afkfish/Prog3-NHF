@@ -45,6 +45,7 @@ public class Generator {
 			Grid.Cell cell = grid.getCell(randomRow, randomColumn);
 			if (!cell.isEmpty()) {
 				cell.setValue(0);
+				cell.isOriginal = false;
 			} else {
 				i--;
 			}

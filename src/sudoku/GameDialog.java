@@ -46,7 +46,7 @@ public class GameDialog extends JDialog {
 		JButton submit = new JButton("Start");
 		submit.addActionListener(submitActionEvent -> {
 			this.dispose();
-			Game game = new Game();
+			Game game = new Game(null, null);
 			if (appFrame != null) {
 				appFrame.setGame(game);
 				appFrame.setVisible(true);

@@ -86,20 +86,16 @@ public class RecordsDialog extends JDialog {
 		}
 	}
 
-	public static void loadRecords(String file) {
-		try {
-			ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file == null ? "records.dat" : file));
-			int n = inputStream.readInt();
-			ArrayList<Record> recordArrayList = new ArrayList<>();
-			for (int i = 0; i < n; i++) {
-				recordArrayList.add((Record) inputStream.readObject());
-			}
-			inputStream.close();
-
-			records = recordArrayList;
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+	public static void loadRecords(String file) throws IOException, ClassNotFoundException {
+		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file == null ? "records.dat" : file));
+		int n = inputStream.readInt();
+		ArrayList<Record> recordArrayList = new ArrayList<>();
+		for (int i = 0; i < n; i++) {
+			recordArrayList.add((Record) inputStream.readObject());
 		}
+		inputStream.close();
+
+		records = recordArrayList;
 	}
 
 	public record Record(int time, int diff) implements Serializable {}

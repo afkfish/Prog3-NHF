@@ -3,16 +3,15 @@ package sudoku;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
  * This is the {@link JFrame} initializer class. It holds the data for the game's {@link #hardness}.
  */
 public class AppFrame extends JFrame {
-	/**
-	 * The window's dimensions.
-	 */
-	private Dimension windowSize;
 	/**
 	 * The {@link JPanel} containing the button grid.
 	 */
@@ -24,36 +23,40 @@ public class AppFrame extends JFrame {
 
 	/**
 	 * Constructor for the {@link JFrame} with the {@link Game} inside.
-	 * @param game the generated game
 	 */
 	public AppFrame(Game game) {
-		super("Sudoku v0.9");
+		super("Sudoku v0.10");
 
+		this.mainPanel = game.getButtonInitializer();
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				game.saveGame();
+				RecordsDialog.saveRecords();
+			}
+		});
+
+		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.windowSize = new Dimension(1280, 720);
+		Dimension windowSize = new Dimension(1280, 720);
 		this.setPreferredSize(windowSize);
 
 		Color bgColor = new Color(29, 37, 40);
 
 		this.initMenuBar();
 
-		this.mainPanel = game.getButtonInitializer();
-
 		JPanel border0 = new JPanel();
-		border0.setPreferredSize(new Dimension((this.windowSize.width-600)/2, this.windowSize.height));
+		border0.setPreferredSize(new Dimension((windowSize.width-600)/2, windowSize.height));
 		JPanel border1 = new JPanel();
-		border1.setPreferredSize(new Dimension((this.windowSize.width-600)/2, this.windowSize.height));
+		border1.setPreferredSize(new Dimension((windowSize.width-600)/2, windowSize.height));
 		JPanel border2 = new JPanel();
-		border2.setPreferredSize(new Dimension(this.windowSize.width, (this.windowSize.height-600)/2));
+		border2.setPreferredSize(new Dimension(windowSize.width, (windowSize.height-600)/2));
 		JPanel border3 = new JPanel();
-		border3.setPreferredSize(new Dimension(this.windowSize.width, (this.windowSize.height-600)/2));
+		border3.setPreferredSize(new Dimension(windowSize.width, (windowSize.height-600)/2));
 		border0.setBackground(bgColor);
 		border1.setBackground(bgColor);
 		border2.setBackground(bgColor);
 		border3.setBackground(bgColor);
-
-		mainPanel.setBackground(bgColor);
-		mainPanel.setPreferredSize(new Dimension(600,600));
 
 		this.add(border0, BorderLayout.WEST);
 		this.add(mainPanel, BorderLayout.CENTER);
@@ -133,7 +136,12 @@ public class AppFrame extends JFrame {
 			fileChooser.setAcceptAllFileFilterUsed(false);
 			fileChooser.addChoosableFileFilter(restrict);
 			fileChooser.showOpenDialog(this);
-			RecordsDialog.loadRecords(fileChooser.getSelectedFile().getName());
+			try {
+				RecordsDialog.loadRecords(fileChooser.getSelectedFile().getName());
+			} catch (IOException | ClassNotFoundException e) {
+				System.err.println("Error in importing records!");
+			}
+
 		});
 		importRecords.setBackground(menuItem);
 		importRecords.setForeground(Color.WHITE);
@@ -161,10 +169,11 @@ public class AppFrame extends JFrame {
 	 */
 	public void setGame(Game game) {
 		Container contain = getContentPane();
+
 		contain.remove(this.mainPanel);
 		this.mainPanel = game.getButtonInitializer();
-		contain.add(mainPanel, BorderLayout.CENTER);
-		validate();
-		setVisible(true);
+		contain.add(this.mainPanel, BorderLayout.CENTER);
+
+		this.setContentPane(contain);
 	}
 }
