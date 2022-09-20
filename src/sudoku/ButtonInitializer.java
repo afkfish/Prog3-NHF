@@ -2,24 +2,28 @@ package sudoku;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * This class initializes the {@link NumberButton}s in a 9x9 pattern to a {@link JPanel}.
  */
 public class ButtonInitializer extends JPanel {
+	/**
+	 * Array to get buttons easier.
+	 */
+	private final ArrayList<NumberButton> buttons = new ArrayList<>();
 
 	/**
 	 * Constructor for initialization of the 9x9 {@link NumberButton} grid.
 	 * @param active the active {@link Grid} where the player changes the {@link Grid.Cell}s
-	 * @param solved the solved {@link Grid}
 	 */
-	public ButtonInitializer(Grid active, Grid solved) {
+	public ButtonInitializer(Grid active) {
 		super(new GridLayout(9,9));
 		Color separator = new Color(48, 58, 62);
 
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
-				NumberButton numberButton = new NumberButton(i, j, active, solved);
+				NumberButton numberButton = new NumberButton(i, j, active.getCell(i, j).getValue(), active.getCell(i, j).isOriginal);
 				if (j == 0) {
 					if (i == 0) {
 						numberButton.setBorder(BorderFactory.createMatteBorder(0,0,1,1, separator));
@@ -82,7 +86,12 @@ public class ButtonInitializer extends JPanel {
 					}
 				}
 				this.add(numberButton);
+				this.buttons.add(numberButton);
 			}
 		}
+	}
+
+	public ArrayList<NumberButton> getButtons() {
+		return buttons;
 	}
 }

@@ -4,30 +4,48 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 /**
  * A listener class for {@link NumberButton} to detect when a button is active and get the user input. If the input is a
  * numerical value between 1 and 9 than change the {@link Grid.Cell} to it.
  */
 public class ChangeListener implements KeyListener {
+	private final Grid active;
+	private final Grid solved;
+	private final ArrayList<NumberButton> buttons;
+
+	public ChangeListener(Grid active, Grid solved, ButtonInitializer buttonInitializer) {
+		this.active = active;
+		this.solved = solved;
+		this.buttons = buttonInitializer.getButtons();
+	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		int n = Character.getNumericValue(e.getKeyChar());
-		NumberButton eventParent = (NumberButton)e.getSource();
 
-		if(n > 0 && n < 10 && eventParent.getPressState()) {
-			eventParent.setNumber(n);
-			eventParent.setText(String.valueOf(eventParent.getNumber()));
-			eventParent.getActiveGrid().getCell(eventParent.getRow(), eventParent.getCol()).setValue(n);
-
+		if(n > 0 && n < 10) {
+			for (NumberButton button: buttons) {
+				if (button.getPressState()) {
+					button.setNumber(n);
+					button.setText(String.valueOf(n));
+					button.changePressState();
+					active.getCell(button.getRow(), button.getCol()).setValue(n);
+				}
+			}
 		} else if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
-			eventParent.setNumber(0);
-			eventParent.setText("");
-			eventParent.getActiveGrid().getCell(eventParent.getRow(), eventParent.getCol()).setValue(0);
+			for (NumberButton button: buttons) {
+				if (button.getPressState()) {
+					button.setNumber(0);
+					button.setText("");
+					button.changePressState();
+					active.getCell(button.getRow(), button.getCol()).setValue(0);
+				}
+			}
 		}
-		eventParent.changePressState();
 
-		if (Grid.compare(eventParent.getActiveGrid(), eventParent.getSolvedGrid())) {
+		if (Grid.compare(active, solved)) {
 			int time = (int) (System.currentTimeMillis() - Game.time) / 1000;
 
 			RecordsDialog.addRecord(time, AppFrame.hardness);

@@ -3,6 +3,7 @@ package sudoku;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class AppFrame extends JFrame {
 			}
 		});
 
+		this.addKeyListener(new ChangeListener(game.getActive(), game.getSolved(), game.getButtonInitializer()));
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Dimension windowSize = new Dimension(1280, 720);
@@ -175,5 +177,9 @@ public class AppFrame extends JFrame {
 		contain.add(this.mainPanel, BorderLayout.CENTER);
 
 		this.setContentPane(contain);
+		for (KeyListener k : this.getKeyListeners()) {
+			this.removeKeyListener(k);
+		}
+		this.addKeyListener(new ChangeListener(game.getActive(), game.getSolved(), game.getButtonInitializer()));
 	}
 }

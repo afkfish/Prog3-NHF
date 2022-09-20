@@ -11,8 +11,6 @@ import java.awt.*;
 public class NumberButton extends JButton {
 	private final int row;
 	private final int col;
-	private final Grid active;
-	private final Grid solved;
 	private boolean pressState;
 	private int number;
 	private Color color;
@@ -21,22 +19,19 @@ public class NumberButton extends JButton {
 	 * Constructor for a {@link NumberButton}.
 	 * @param row the row position of the button
 	 * @param col the column position of the button
-	 * @param active the {@link Game}'s active {@link Grid} which the player can modify
-	 * @param solved the solution {@link Grid} that will be compared
 	 */
-	public NumberButton(int row, int col, Grid active, Grid solved) {
+	public NumberButton(int row, int col, int number, boolean isOriginal) {
 		super();
 
 		this.row = row;
 		this.col = col;
-		this.active = active;
-		this.solved = solved;
-		this.number = active.getCell(row, col).getValue();
+		this.number = number;
 
+		this.setFocusable(false);
 		this.pressState = false;
 		this.color = new Color(46, 58, 63);
 
-		if (!active.getCell(row, col).isOriginal) {
+		if (!isOriginal) {
 			this.setText(this.number == 0 ? null : String.valueOf(this.number));
 			this.setUI(new RoundButtonUI(this.color));
 		} else {
@@ -50,7 +45,7 @@ public class NumberButton extends JButton {
 			});
 		}
 
-		this.addKeyListener(new ChangeListener());
+		//this.addKeyListener(new ChangeListener());
 
 		this.setPreferredSize(new Dimension(25, 25));
 		this.setBackground(new Color(29, 37, 40));
@@ -74,20 +69,6 @@ public class NumberButton extends JButton {
 	 */
 	public int getCol() {
 		return col;
-	}
-
-	/**
-	 * @return the {@link Game}'s actively changing {@link Grid}
-	 */
-	public Grid getActiveGrid() {
-		return active;
-	}
-
-	/**
-	 * @return the {@link Game}'s solved {@link Grid}
-	 */
-	public Grid getSolvedGrid() {
-		return solved;
 	}
 
 	/**
