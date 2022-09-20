@@ -17,6 +17,7 @@ public class AppFrame extends JFrame {
 	 * The {@link JPanel} containing the button grid.
 	 */
 	private JPanel mainPanel;
+	private static Game game;
 	/**
 	 * The stored hardness of the current {@link Game}. The difficulty level can be: 0 -> 10
 	 */
@@ -28,11 +29,12 @@ public class AppFrame extends JFrame {
 	public AppFrame(Game game) {
 		super("Sudoku v0.10");
 
+		AppFrame.game = game;
 		this.mainPanel = game.getButtonInitializer();
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				game.saveGame();
+				AppFrame.game.saveGame();
 				RecordsDialog.saveRecords();
 			}
 		});
@@ -171,6 +173,7 @@ public class AppFrame extends JFrame {
 	 */
 	public void setGame(Game game) {
 		Container contain = getContentPane();
+		AppFrame.game = game;
 
 		contain.remove(this.mainPanel);
 		this.mainPanel = game.getButtonInitializer();
