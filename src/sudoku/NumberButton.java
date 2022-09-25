@@ -45,16 +45,12 @@ public class NumberButton extends JButton {
 			});
 		}
 
-		//this.addKeyListener(new ChangeListener());
-
 		this.setPreferredSize(new Dimension(25, 25));
 		this.setBackground(new Color(29, 37, 40));
 		this.setAlignmentY(0.5F);
 		this.setOpaque(true);
 		this.setFont(new Font("arial", Font.PLAIN, 20));
 		this.setForeground(new Color(255, 255, 255));
-
-		this.addActionListener(actionEvent -> this.changePressState());
 	}
 
 	/**
@@ -103,5 +99,15 @@ public class NumberButton extends JButton {
 			this.color = new Color(46, 58, 63);
 		}
 		this.setUI(new RoundButtonUI(this.color));
+	}
+
+	/**
+	 * Static method for comparing two buttons.
+	 * @param b1 first button
+	 * @param b2 second button
+	 * @return boolean
+	 */
+	public static boolean equals(NumberButton b1, NumberButton b2) {
+		return (b1.getRow() == b2.getRow()) && (b1.getCol() == b2.getCol()) && (b1.number == b2.number);
 	}
 }

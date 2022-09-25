@@ -1,11 +1,19 @@
 package sudoku;
 
+import com.bulenkov.darcula.DarculaLaf;
+
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class Main {
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel(new DarculaLaf());
+		} catch (UnsupportedLookAndFeelException e) {
+			throw new RuntimeException(e);
+		}
 		try {
 			RecordsDialog.loadRecords("records.dat");
 		} catch (IOException | ClassNotFoundException e) {
@@ -32,5 +40,6 @@ public class Main {
 			GameDialog startDialog = new GameDialog(null);
 			startDialog.setVisible(true);
 		}
+		//NewGame dialog = new NewGame();
 	}
 }

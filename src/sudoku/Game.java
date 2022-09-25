@@ -61,6 +61,9 @@ public class Game {
 		return solved;
 	}
 
+	/**
+	 * Saves the current game.
+	 */
 	public void saveGame() {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("game.dat"));

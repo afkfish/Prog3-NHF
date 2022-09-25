@@ -1,12 +1,12 @@
 package sudoku;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Objects;
 
 /**
@@ -17,6 +17,9 @@ public class AppFrame extends JFrame {
 	 * The {@link JPanel} containing the button grid.
 	 */
 	private JPanel mainPanel;
+	/**
+	 * The static {@link Game} which is currently displayed.
+	 */
 	private static Game game;
 	/**
 	 * The stored hardness of the current {@link Game}. The difficulty level can be: 0 -> 10
@@ -28,6 +31,9 @@ public class AppFrame extends JFrame {
 	 */
 	public AppFrame(Game game) {
 		super("Sudoku v0.10");
+
+		ImageIcon imageIcon = new ImageIcon("assets/icon/sudoku_128x128.png");
+		this.setIconImage(imageIcon.getImage());
 
 		AppFrame.game = game;
 		this.mainPanel = game.getButtonInitializer();
@@ -68,12 +74,12 @@ public class AppFrame extends JFrame {
 		this.add(border2, BorderLayout.SOUTH);
 		this.add(border3, BorderLayout.NORTH);
 
-        this.pack();
+		this.pack();
 		this.setLocationRelativeTo(null);
-    }
+	}
 
 	/**
-	 * Menubar initializer. <br><br/> NOTE: When using the app on macOS the menubar is moved to the top
+	 * Menubar initializer. <br><br/> Note: When using the app on macOS the menubar is moved to the top
 	 * menubar.
 	 */
 	private void initMenuBar() {
@@ -105,10 +111,72 @@ public class AppFrame extends JFrame {
 		JMenuItem saveGame = new JMenuItem("Save game");
 		saveGame.setBackground(menuItem);
 		saveGame.setForeground(Color.WHITE);
+		saveGame.addActionListener(actionEvent -> game.saveGame());
 
 		JMenuItem loadGame = new JMenuItem("Load game");
 		loadGame.setBackground(menuItem);
 		loadGame.setForeground(Color.WHITE);
+		loadGame.addActionListener(actionEvent -> {
+			FileDialog fileDialog = new FileDialog(this, "Choose game save", FileDialog.LOAD);
+			fileDialog.setDirectory(System.getProperty("user.dir"));
+			fileDialog.setFile("*.DAT;*.dat");
+			fileDialog.setLocationRelativeTo(null);
+			fileDialog.setVisible(true);
+			Game game;
+			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileDialog.getDirectory() + fileDialog.getFile()))) {
+				Grid active = (Grid) ois.readObject();
+				Grid solved = (Grid) ois.readObject();
+
+				if (!Grid.compare(active, solved)) {
+					Game.time = ois.readLong();
+					AppFrame.hardness = ois.readInt();
+
+					game = new Game(active, solved);
+					this.setGame(game);
+					this.setVisible(true);
+				} else {
+					JDialog dialog = new JDialog(this,"Error!",true);
+					JLabel label = new JLabel("Error! This game is already solved!");
+					label.setPreferredSize(new Dimension(300, 30));
+					label.setHorizontalTextPosition(SwingConstants.CENTER);
+					label.setHorizontalAlignment(SwingConstants.CENTER);
+					dialog.add(label);
+					dialog.pack();
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);
+				}
+			} catch (IOException | ClassNotFoundException e) {
+				JDialog error = new JDialog(this, "Error!", true);
+				JPanel panel = new JPanel(new GridLayout(2, 1));
+				error.add(panel);
+				JPanel text = new JPanel();
+				JPanel button = new JPanel();
+				panel.add(text);
+				panel.add(button);
+				JLabel label = new JLabel("Error in loading game! \nMaybe bad save.");
+				label.setPreferredSize(new Dimension(300, 30));
+				label.setHorizontalTextPosition(SwingConstants.CENTER);
+				label.setHorizontalAlignment(SwingConstants.CENTER);
+				JButton okButton = new JButton("Dismiss");
+				okButton.setUI(new BasicButtonUI() {
+					@Override
+					public void update(Graphics g, JComponent c) {
+						super.update(g, c);
+						if (c.isOpaque()) {
+							g.setColor(new Color(46, 58, 63));
+							g.fillRect(0, 0, c.getWidth(),c.getHeight());
+						}
+						paint(g, c);
+					}
+				});
+				okButton.addActionListener(actionEvent1 -> error.dispose());
+				button.add(okButton);
+				text.add(label);
+				error.pack();
+				error.setLocationRelativeTo(null);
+				error.setVisible(true);
+			}
+		});
 
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.setBackground(menuItem);
@@ -135,18 +203,18 @@ public class AppFrame extends JFrame {
 
 		JMenuItem importRecords = new JMenuItem("Import");
 		importRecords.addActionListener(actionEvent -> {
-			JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
-			FileNameExtensionFilter restrict = new FileNameExtensionFilter("Only .dat files", "DAT", "dat");
-			fileChooser.setAcceptAllFileFilterUsed(false);
-			fileChooser.addChoosableFileFilter(restrict);
-			fileChooser.showOpenDialog(this);
+			FileDialog fileDialog = new FileDialog(this, "Choose record save", FileDialog.LOAD);
+			fileDialog.setDirectory(System.getProperty("user.dir"));
+			fileDialog.setFile("*.DAT;*.dat");
+			fileDialog.setLocationRelativeTo(null);
+			fileDialog.setVisible(true);
 			try {
-				RecordsDialog.loadRecords(fileChooser.getSelectedFile().getName());
+				RecordsDialog.loadRecords(fileDialog.getDirectory() + fileDialog.getFile());
 			} catch (IOException | ClassNotFoundException e) {
 				System.err.println("Error in importing records!");
 			}
-
 		});
+
 		importRecords.setBackground(menuItem);
 		importRecords.setForeground(Color.WHITE);
 
