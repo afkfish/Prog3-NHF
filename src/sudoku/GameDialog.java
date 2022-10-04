@@ -34,6 +34,7 @@ public class GameDialog extends JDialog {
 		JSlider slider = new JSlider(0, 10, AppFrame.hardness);
 		slider.setPreferredSize(new Dimension(300, 20));
 		slider.setBackground(menu);
+		slider.setFocusable(false);
 		slider.setUI(new BasicSliderUI());
 		slider.setSnapToTicks(true);
 		slider.setBorder(null);
