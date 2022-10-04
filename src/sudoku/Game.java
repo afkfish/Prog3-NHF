@@ -8,13 +8,14 @@ import java.io.ObjectOutputStream;
 
 /**
  * This class generates a game with {@link Generator} into a {@link Grid} and also makes a {@link ButtonInitializer}
- * to make the game visible. Also stores the {@link #time} when the game started.
+ * to make the game visible. Also stores the {@link #elapsedTime} when the game started.
  */
 public class Game {
 	private final ButtonInitializer buttonInitializer;
 	private Grid active;
 	private Grid solved;
-	public static long time;
+	private static long currentStartTime;
+	private static long elapsedTime = 0;
 
 	/**
 	 * Constructs a new game instance with {@link Grid} and a {@link ButtonInitializer} by the given hardness.
@@ -41,8 +42,6 @@ public class Game {
 		this.buttonInitializer.setBorder(new LineBorder(Color.GRAY, 2, true));
 		this.buttonInitializer.setBackground(new Color(29, 37, 40));
 		this.buttonInitializer.setPreferredSize(new Dimension(600,600));
-
-		Game.time = System.currentTimeMillis();
 	}
 
 	/**
@@ -61,6 +60,20 @@ public class Game {
 		return solved;
 	}
 
+
+	public static void setCurrentStartTime() {
+		currentStartTime = System.currentTimeMillis();
+	}
+
+	public static void setElapsedTime(long time) {
+		elapsedTime = time;
+	}
+
+
+	public static int timeSinceGameStart() {
+		return (int)(elapsedTime * 1000 + System.currentTimeMillis() - currentStartTime) / 1000;
+	}
+
 	/**
 	 * Saves the current game.
 	 */
@@ -69,7 +82,7 @@ public class Game {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("game.dat"));
 			oos.writeObject(this.active);
 			oos.writeObject(this.solved);
-			oos.writeLong(Game.time);
+			oos.writeLong(timeSinceGameStart());
 			oos.writeInt(AppFrame.hardness);
 			oos.close();
 		} catch (IOException e) {

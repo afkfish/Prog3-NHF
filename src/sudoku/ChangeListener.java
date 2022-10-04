@@ -46,7 +46,8 @@ public class ChangeListener implements KeyListener {
 		}
 
 		if (Grid.compare(active, solved)) {
-			int time = (int) (System.currentTimeMillis() - Game.time) / 1000;
+			int time = Game.timeSinceGameStart();
+			AppFrame.timer.stop();
 
 			RecordsDialog.addRecord(time, AppFrame.hardness);
 

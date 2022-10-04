@@ -6,13 +6,21 @@ import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Objects;
 
 public class Main {
 	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(new DarculaLaf());
-		} catch (UnsupportedLookAndFeelException e) {
-			throw new RuntimeException(e);
+		/*
+		 * Note: When using the app on macOS the menubar is moved to the top menubar and the default laf is preserved.
+		 */
+		if(Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+		} else {
+			try {
+				UIManager.setLookAndFeel(new DarculaLaf());
+			} catch (UnsupportedLookAndFeelException e) {
+				throw new RuntimeException(e);
+			}
 		}
 		try {
 			RecordsDialog.loadRecords("records.dat");
@@ -26,7 +34,9 @@ public class Main {
 			Grid solved = (Grid) ois.readObject();
 
 			if (!Grid.compare(active, solved)) {
-				Game.time = ois.readLong();
+				long time = ois.readLong();
+				Game.setCurrentStartTime();
+				Game.setElapsedTime(time);
 				AppFrame.hardness = ois.readInt();
 
 				game = new Game(active, solved);

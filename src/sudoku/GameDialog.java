@@ -47,6 +47,8 @@ public class GameDialog extends JDialog {
 		submit.addActionListener(submitActionEvent -> {
 			this.dispose();
 			Game game = new Game(null, null);
+			Game.setCurrentStartTime();
+			Game.setElapsedTime(0);
 			if (appFrame != null) {
 				appFrame.setGame(game);
 				appFrame.setVisible(true);

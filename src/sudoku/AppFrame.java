@@ -7,7 +7,6 @@ import java.awt.event.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Objects;
 
 /**
  * This is the {@link JFrame} initializer class. It holds the data for the game's {@link #hardness}.
@@ -25,6 +24,10 @@ public class AppFrame extends JFrame {
 	 * The stored hardness of the current {@link Game}. The difficulty level can be: 0 -> 10
 	 */
 	public static int hardness = 0;
+
+	public static Timer timer;
+
+	private final int[] count = new int[1];
 
 	/**
 	 * Constructor for the {@link JFrame} with the {@link Game} inside.
@@ -68,6 +71,28 @@ public class AppFrame extends JFrame {
 		border2.setBackground(bgColor);
 		border3.setBackground(bgColor);
 
+		JLabel time = new JLabel("...");
+		time.setForeground(Color.WHITE);
+		time.setHorizontalAlignment(SwingConstants.CENTER);
+		time.setMinimumSize(new Dimension(300, 40));
+		time.setPreferredSize(new Dimension(300, 40));
+		time.setMaximumSize(new Dimension(500, 40));
+		time.setFont(new Font("big", Font.PLAIN, 30));
+
+		count[0] = Game.timeSinceGameStart();
+		timer = new Timer(1000, e -> {
+			++count[0];
+			if (count[0] < 100000) {
+				String min = String.format("%02d",(count[0] / 60));
+				String sec = String.format("%02d", (count[0] % 60));
+				time.setText(min + ":" + sec);
+			} else {
+				((Timer) e.getSource()).stop();
+			}
+		});
+		border2.add(time, BorderLayout.CENTER);
+		timer.setInitialDelay(0);
+
 		this.add(border0, BorderLayout.WEST);
 		this.add(mainPanel, BorderLayout.CENTER);
 		this.add(border1, BorderLayout.EAST);
@@ -76,17 +101,13 @@ public class AppFrame extends JFrame {
 
 		this.pack();
 		this.setLocationRelativeTo(null);
+		timer.start();
 	}
 
 	/**
-	 * Menubar initializer. <br><br/> Note: When using the app on macOS the menubar is moved to the top
-	 * menubar.
+	 * Menubar initializer.
 	 */
 	private void initMenuBar() {
-		if(Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
-			System.setProperty("apple.laf.useScreenMenuBar", "true");
-		}
-
 		Color menu = new Color(29, 37, 40);
 		Color menuItem = new Color(39, 49, 54);
 
@@ -95,15 +116,15 @@ public class AppFrame extends JFrame {
 		menuBar.setForeground(Color.WHITE);
 		menuBar.setBorder(BorderFactory.createLineBorder(new Color(48, 58, 62), 1));
 
-		JMenu file = new JMenu("File");
-		file.setBackground(menu);
-		file.setForeground(Color.WHITE);
+		JMenu gameMenu = new JMenu("Game");
+		gameMenu.setBackground(menu);
+		gameMenu.setForeground(Color.WHITE);
 
 		JMenuItem newGame = new JMenuItem("New game");
 		newGame.addActionListener(actionEvent -> {
+			timer.stop();
 			GameDialog newGameDialog = new GameDialog(this);
 			newGameDialog.setVisible(true);
-
 		});
 		newGame.setBackground(menuItem);
 		newGame.setForeground(Color.WHITE);
@@ -123,12 +144,15 @@ public class AppFrame extends JFrame {
 			fileDialog.setLocationRelativeTo(null);
 			fileDialog.setVisible(true);
 			Game game;
+			timer.stop();
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileDialog.getDirectory() + fileDialog.getFile()))) {
 				Grid active = (Grid) ois.readObject();
 				Grid solved = (Grid) ois.readObject();
 
 				if (!Grid.compare(active, solved)) {
-					Game.time = ois.readLong();
+					long time = ois.readLong();
+					Game.setElapsedTime(time);
+					Game.setCurrentStartTime();
 					AppFrame.hardness = ois.readInt();
 
 					game = new Game(active, solved);
@@ -181,13 +205,17 @@ public class AppFrame extends JFrame {
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.setBackground(menuItem);
 		exit.setForeground(Color.WHITE);
-		exit.addActionListener(actionEvent -> System.exit(0));
+		exit.addActionListener(actionEvent -> {
+			AppFrame.game.saveGame();
+			RecordsDialog.saveRecords();
+			System.exit(0);
+		});
 
-		file.add(newGame);
-		file.add(saveGame);
-		file.add(loadGame);
-		file.addSeparator();
-		file.add(exit);
+		gameMenu.add(newGame);
+		gameMenu.add(saveGame);
+		gameMenu.add(loadGame);
+		gameMenu.addSeparator();
+		gameMenu.add(exit);
 
 		JMenu records = new JMenu("Records");
 		records.setBackground(menuItem);
@@ -221,7 +249,7 @@ public class AppFrame extends JFrame {
 		records.add(viewRecords);
 		records.add(importRecords);
 
-		menuBar.add(file);
+		menuBar.add(gameMenu);
 		menuBar.add(records);
 
 		this.setJMenuBar(menuBar);
@@ -242,6 +270,7 @@ public class AppFrame extends JFrame {
 	public void setGame(Game game) {
 		Container contain = getContentPane();
 		AppFrame.game = game;
+		count[0] = Game.timeSinceGameStart();
 
 		contain.remove(this.mainPanel);
 		this.mainPanel = game.getButtonInitializer();
@@ -252,5 +281,6 @@ public class AppFrame extends JFrame {
 			this.removeKeyListener(k);
 		}
 		this.addKeyListener(new ChangeListener(game.getActive(), game.getSolved(), game.getButtonInitializer()));
+		timer.start();
 	}
 }
