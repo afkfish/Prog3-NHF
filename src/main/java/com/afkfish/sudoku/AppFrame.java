@@ -249,8 +249,20 @@ public class AppFrame extends JFrame {
 		records.add(viewRecords);
 		records.add(importRecords);
 
+		JMenu help = new JMenu("Help");
+		help.setBackground(menu);
+		help.setForeground(Color.WHITE);
+
+		JMenuItem validate = new JMenuItem("Validate");
+		validate.addActionListener(actionEvent -> ((ButtonInitializer) mainPanel).validateGrid(game.getSolved()));
+		validate.setBackground(menuItem);
+		validate.setForeground(Color.WHITE);
+
+		help.add(validate);
+
 		menuBar.add(gameMenu);
 		menuBar.add(records);
+		menuBar.add(help);
 
 		this.setJMenuBar(menuBar);
 	}

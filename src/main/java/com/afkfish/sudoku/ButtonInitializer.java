@@ -74,6 +74,17 @@ public class ButtonInitializer extends JPanel  implements ActionListener {
 		return buttons;
 	}
 
+	public void validateGrid(Grid solved) {
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				NumberButton button = buttons.get(i*9+j);
+				if (button.getNumber() != solved.getCell(i, j).getValue()) {
+					button.setUI(new RoundButtonUI(new Color(154, 26, 26)));
+				}
+			}
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof NumberButton) {
