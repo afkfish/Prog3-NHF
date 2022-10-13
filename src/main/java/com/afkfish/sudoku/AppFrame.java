@@ -1,7 +1,6 @@
 package com.afkfish.sudoku;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileInputStream;
@@ -54,8 +53,6 @@ public class AppFrame extends JFrame {
 		Dimension windowSize = new Dimension(1280, 720);
 		this.setPreferredSize(windowSize);
 
-		Color bgColor = new Color(29, 37, 40);
-
 		this.initMenuBar();
 
 		JPanel border0 = new JPanel();
@@ -66,10 +63,6 @@ public class AppFrame extends JFrame {
 		border2.setPreferredSize(new Dimension(windowSize.width, (windowSize.height-600)/2));
 		JPanel border3 = new JPanel();
 		border3.setPreferredSize(new Dimension(windowSize.width, (windowSize.height-600)/2));
-		border0.setBackground(bgColor);
-		border1.setBackground(bgColor);
-		border2.setBackground(bgColor);
-		border3.setBackground(bgColor);
 
 		JLabel time = new JLabel("...");
 		time.setForeground(Color.WHITE);
@@ -108,34 +101,26 @@ public class AppFrame extends JFrame {
 	 * Menubar initializer.
 	 */
 	private void initMenuBar() {
-		Color menu = new Color(29, 37, 40);
-		Color menuItem = new Color(39, 49, 54);
-
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBackground(menu);
 		menuBar.setForeground(Color.WHITE);
 		menuBar.setBorder(BorderFactory.createLineBorder(new Color(48, 58, 62), 1));
 
 		JMenu gameMenu = new JMenu("Game");
-		gameMenu.setBackground(menu);
 		gameMenu.setForeground(Color.WHITE);
 
 		JMenuItem newGame = new JMenuItem("New game");
 		newGame.addActionListener(actionEvent -> {
 			timer.stop();
-			GameDialog newGameDialog = new GameDialog(this);
-			newGameDialog.setVisible(true);
+			NewGame newGameFrame = new NewGame(this);
+			newGameFrame.setVisible(true);
 		});
-		newGame.setBackground(menuItem);
 		newGame.setForeground(Color.WHITE);
 
 		JMenuItem saveGame = new JMenuItem("Save game");
-		saveGame.setBackground(menuItem);
 		saveGame.setForeground(Color.WHITE);
 		saveGame.addActionListener(actionEvent -> game.saveGame());
 
 		JMenuItem loadGame = new JMenuItem("Load game");
-		loadGame.setBackground(menuItem);
 		loadGame.setForeground(Color.WHITE);
 		loadGame.addActionListener(actionEvent -> {
 			FileDialog fileDialog = new FileDialog(this, "Choose game save", FileDialog.LOAD);
@@ -159,51 +144,14 @@ public class AppFrame extends JFrame {
 					this.setGame(game);
 					this.setVisible(true);
 				} else {
-					JDialog dialog = new JDialog(this,"Error!",true);
-					JLabel label = new JLabel("Error! This game is already solved!");
-					label.setPreferredSize(new Dimension(300, 30));
-					label.setHorizontalTextPosition(SwingConstants.CENTER);
-					label.setHorizontalAlignment(SwingConstants.CENTER);
-					dialog.add(label);
-					dialog.pack();
-					dialog.setLocationRelativeTo(null);
-					dialog.setVisible(true);
+					new ErrorDialog(this, "Error", true, "Error! This game is already solved!");
 				}
 			} catch (IOException | ClassNotFoundException e) {
-				JDialog error = new JDialog(this, "Error!", true);
-				JPanel panel = new JPanel(new GridLayout(2, 1));
-				error.add(panel);
-				JPanel text = new JPanel();
-				JPanel button = new JPanel();
-				panel.add(text);
-				panel.add(button);
-				JLabel label = new JLabel("Error in loading game! \nMaybe bad save.");
-				label.setPreferredSize(new Dimension(300, 30));
-				label.setHorizontalTextPosition(SwingConstants.CENTER);
-				label.setHorizontalAlignment(SwingConstants.CENTER);
-				JButton okButton = new JButton("Dismiss");
-				okButton.setUI(new BasicButtonUI() {
-					@Override
-					public void update(Graphics g, JComponent c) {
-						super.update(g, c);
-						if (c.isOpaque()) {
-							g.setColor(new Color(46, 58, 63));
-							g.fillRect(0, 0, c.getWidth(),c.getHeight());
-						}
-						paint(g, c);
-					}
-				});
-				okButton.addActionListener(actionEvent1 -> error.dispose());
-				button.add(okButton);
-				text.add(label);
-				error.pack();
-				error.setLocationRelativeTo(null);
-				error.setVisible(true);
+				new ErrorDialog(this, "Error", true, "Error in loading game! \nMaybe bad save.");
 			}
 		});
 
 		JMenuItem exit = new JMenuItem("Exit");
-		exit.setBackground(menuItem);
 		exit.setForeground(Color.WHITE);
 		exit.addActionListener(actionEvent -> {
 			AppFrame.game.saveGame();
@@ -218,7 +166,6 @@ public class AppFrame extends JFrame {
 		gameMenu.add(exit);
 
 		JMenu records = new JMenu("Records");
-		records.setBackground(menuItem);
 		records.setForeground(Color.WHITE);
 
 		JMenuItem viewRecords = new JMenuItem("View");
@@ -226,7 +173,6 @@ public class AppFrame extends JFrame {
 			RecordsDialog recordsDialog = new RecordsDialog(this);
 			recordsDialog.setVisible(true);
 		});
-		viewRecords.setBackground(menuItem);
 		viewRecords.setForeground(Color.WHITE);
 
 		JMenuItem importRecords = new JMenuItem("Import");
@@ -243,19 +189,16 @@ public class AppFrame extends JFrame {
 			}
 		});
 
-		importRecords.setBackground(menuItem);
 		importRecords.setForeground(Color.WHITE);
 
 		records.add(viewRecords);
 		records.add(importRecords);
 
 		JMenu help = new JMenu("Help");
-		help.setBackground(menu);
 		help.setForeground(Color.WHITE);
 
 		JMenuItem validate = new JMenuItem("Validate");
 		validate.addActionListener(actionEvent -> ((ButtonInitializer) mainPanel).validateGrid(game.getSolved()));
-		validate.setBackground(menuItem);
 		validate.setForeground(Color.WHITE);
 
 		help.add(validate);

@@ -1,6 +1,6 @@
 package com.afkfish.sudoku;
 
-import com.bulenkov.darcula.DarculaLaf;
+import com.formdev.flatlaf.FlatDarculaLaf;
 
 import javax.swing.*;
 import java.io.FileInputStream;
@@ -15,12 +15,11 @@ public class Main {
 		 */
 		if(Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
-		} else {
-			try {
-				UIManager.setLookAndFeel(new DarculaLaf());
-			} catch (UnsupportedLookAndFeelException e) {
-				throw new RuntimeException(e);
-			}
+		}
+		try {
+			UIManager.setLookAndFeel(new FlatDarculaLaf());
+		} catch (UnsupportedLookAndFeelException e) {
+			throw new RuntimeException(e);
 		}
 		try {
 			RecordsDialog.loadRecords("records.dat");
@@ -43,13 +42,12 @@ public class Main {
 				AppFrame frame = new AppFrame(game);
 				frame.setVisible(true);
 			} else {
-				GameDialog startDialog = new GameDialog(null);
+				NewGame startDialog = new NewGame(null);
 				startDialog.setVisible(true);
 			}
 		} catch (IOException | ClassNotFoundException e) {
-			GameDialog startDialog = new GameDialog(null);
+			NewGame startDialog = new NewGame(null);
 			startDialog.setVisible(true);
 		}
-		//NewGame dialog = new NewGame();
 	}
 }

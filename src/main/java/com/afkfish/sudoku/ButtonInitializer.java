@@ -21,7 +21,7 @@ public class ButtonInitializer extends JPanel  implements ActionListener {
 	 */
 	public ButtonInitializer(Grid active) {
 		super(new GridLayout(9,9));
-		Color separator = new Color(48, 58, 62);
+		Color separator = new Color(30, 30, 30);
 
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {

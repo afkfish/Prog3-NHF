@@ -29,7 +29,7 @@ public class NumberButton extends JButton {
 
 		this.setFocusable(false);
 		this.pressState = false;
-		this.color = new Color(46, 58, 63);
+		this.color = new Color(58, 62, 64);
 
 		if (!isOriginal) {
 			this.setText(this.number == 0 ? null : String.valueOf(this.number));
@@ -46,11 +46,10 @@ public class NumberButton extends JButton {
 		}
 
 		this.setPreferredSize(new Dimension(25, 25));
-		this.setBackground(new Color(29, 37, 40));
 		this.setAlignmentY(0.5F);
 		this.setOpaque(true);
 		this.setFont(new Font("arial", Font.PLAIN, 20));
-		this.setForeground(new Color(255, 255, 255));
+		this.setForeground(Color.WHITE);
 	}
 
 	/**
@@ -96,7 +95,7 @@ public class NumberButton extends JButton {
 		if(this.pressState) {
 			this.color = new Color(139, 239, 99, 166);
 		} else {
-			this.color = new Color(46, 58, 63);
+			this.color = new Color(58, 62, 64);
 		}
 		this.setUI(new RoundButtonUI(this.color));
 	}

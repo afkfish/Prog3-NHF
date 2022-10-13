@@ -40,7 +40,6 @@ public class Game {
 
 		this.buttonInitializer = new ButtonInitializer(this.active);
 		this.buttonInitializer.setBorder(new LineBorder(Color.GRAY, 2, true));
-		this.buttonInitializer.setBackground(new Color(29, 37, 40));
 		this.buttonInitializer.setPreferredSize(new Dimension(600,600));
 	}
 
