@@ -71,9 +71,6 @@ public class NewGame extends JFrame {
 				frame.setVisible(true);
 			}
 		});
-		ok.setPreferredSize(new Dimension(100, 20));
-		ok.setForeground(Color.WHITE);
-		ok.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		topPanel.add(hardnessLabel);
 		topPanel.add(slider);

@@ -16,5 +16,6 @@ Részletesebb leírások a [Dokumentációk](https://github.com/afkfish/Prog3-NH
 * [Specifikáció](./docs/specification.pdf "Specifikáció")
 
 ## Képernyőképek
-![Új játék](./docs/new_game.png)
 ![Játék](./docs/game.png)
+![Új játék 1](./docs/new_game1.png)
+![Új játék 2](./docs/new_game2.png)
