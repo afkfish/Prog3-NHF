@@ -238,4 +238,12 @@ public class AppFrame extends JFrame {
 		this.addKeyListener(new ChangeListener(game.getActive(), game.getSolved(), game.getButtonInitializer()));
 		timer.start();
 	}
+
+	public void startTimer() {
+		timer.start();
+	}
+
+	public boolean isSolved() {
+		return Grid.compare(game.getActive(), game.getSolved());
+	}
 }

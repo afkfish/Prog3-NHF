@@ -53,10 +53,13 @@ public class ChangeListener implements KeyListener {
 
 			JDialog dialog = new JDialog(AppFrame.getFrames()[0], "You won!", true);
 			dialog.setMinimumSize(new Dimension(300, 100));
-			dialog.getContentPane().setBackground(new Color(29, 37, 40));
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-			JLabel label = new JLabel("It took " + time + " seconds to solve.");
+			String min = String.format("%02d",(time / 60));
+			String sec = String.format("%02d", (time % 60));
+			String fTime = min + ":" + sec;
+
+			JLabel label = new JLabel("It took " + fTime + " seconds to solve.");
 			label.setHorizontalAlignment(SwingConstants.CENTER);
 			label.setVerticalAlignment(SwingConstants.CENTER);
 			label.setForeground(Color.WHITE);

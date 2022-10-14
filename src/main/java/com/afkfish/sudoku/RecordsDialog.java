@@ -24,7 +24,7 @@ public class RecordsDialog extends JDialog {
 		this.setResizable(true);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(menu);
+		//panel.setBackground(menu);
 		panel.setLayout(new GridLayout(records.size() + 2, 3));
 		panel.add(new JLabel(""));
 		panel.add(new JLabel("Time in sec"));
@@ -43,19 +43,17 @@ public class RecordsDialog extends JDialog {
 		if (records.size() > 0) {
 			JButton saveRecords = new JButton("Export");
 			saveRecords.addActionListener(actionEvent -> saveRecords());
-			saveRecords.setPreferredSize(new Dimension(100, 20));
-			saveRecords.setUI(new BasicButtonUI() {
+			saveRecords.setPreferredSize(new Dimension(80, 20));
+			/*saveRecords.setUI(new BasicButtonUI() {
 				@Override
 				public void update(Graphics g, JComponent c) {
 					super.update(g, c);
 					if (c.isOpaque()) {
-						g.setColor(new Color(46, 58, 63));
 						g.fillRect(0, 0, c.getWidth(),c.getHeight());
 					}
 					paint(g, c);
 				}
-			});
-			saveRecords.setBackground(menu);
+			});*/
 			saveRecords.setForeground(Color.WHITE);
 			saveRecords.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -65,9 +63,11 @@ public class RecordsDialog extends JDialog {
 			JLabel label = new JLabel("No records yet!");
 			label.setFont(new Font("font1", Font.PLAIN, 15));
 			label.setForeground(Color.WHITE);
-			label.setPreferredSize(new Dimension(300, 30));
+			label.setPreferredSize(new Dimension(120, 30));
+			label.setHorizontalAlignment(SwingConstants.CENTER);
 			label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+			panel.add(new JLabel(""));
 			panel.add(label);
 		}
 

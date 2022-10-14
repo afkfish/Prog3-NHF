@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.dnd.DropTarget;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,7 +15,15 @@ import java.io.ObjectInputStream;
 public class NewGame extends JFrame {
 	public NewGame(AppFrame appFrame) {
 		super("Sudoku");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				if (!appFrame.isSolved()) {
+					appFrame.startTimer();
+				}
+			}
+		});
 		JPanel contentPane = new JPanel(new GridLayout(1, 1));
 		this.setContentPane(contentPane);
 		this.setSize(500, 400);
