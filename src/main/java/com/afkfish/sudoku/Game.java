@@ -26,10 +26,8 @@ public class Game {
 		if (active == null || solved == null) {
 			this.solved = Grid.emptyGrid();
 
-			while(!this.solved.isFullGrid()) {
-				Generator generator = new Generator();
-				this.solved = generator.generate(0);
-			}
+			Generator generator = new Generator();
+			this.solved = generator.generate(0);
 
 			this.active = new Grid(this.solved);
 			Generator.eraseCells(this.active, hardness * 4 + 6);

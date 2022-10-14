@@ -24,7 +24,11 @@ public class Generator {
 	 */
 	public Grid generate(int numberOfEmptyCells) {
 		Grid grid = Grid.emptyGrid();
-		solver.solve(grid);
+
+		while (!grid.isFullGrid()) {
+			grid = Grid.emptyGrid();
+			solver.solve(grid);
+		}
 
 		eraseCells(grid, numberOfEmptyCells);
 
