@@ -27,12 +27,6 @@ public class GridTest {
 	}
 
 	@Test
-	public void fullGrid() {
-		grid = generator.generate(0);
-		Assert.assertTrue(grid.isFullGrid());
-	}
-
-	@Test
 	public void nEmptyCells() {
 		grid = generator.generate(n);
 
