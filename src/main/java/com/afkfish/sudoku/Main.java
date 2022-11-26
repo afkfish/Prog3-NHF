@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.util.Objects;
 
 public class Main {
+	public static final String version = "1.0";
 	public static void main(String[] args) {
 		/*
 		 * Note: When using the app on macOS the menubar is moved to the top menubar and the default laf is preserved.

@@ -1,7 +1,6 @@
 package com.afkfish.sudoku;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicSliderUI;
 import java.awt.*;
 import java.awt.dnd.DropTarget;
 import java.awt.event.KeyEvent;
@@ -13,20 +12,26 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class NewGame extends JFrame {
+	private static boolean lonely;
 	public NewGame(AppFrame appFrame) {
-		super("Sudoku");
+		super("Sudoku " + Main.version);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		if (appFrame == null) {
+			lonely = true;
+		}
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				if (!appFrame.isSolved()) {
+				if (appFrame != null && !appFrame.isSolved()) {
 					appFrame.startTimer();
+				} else if(lonely) {
+					System.exit(0);
 				}
 			}
 		});
 		JPanel contentPane = new JPanel(new GridLayout(1, 1));
 		this.setContentPane(contentPane);
-		this.setSize(500, 400);
+		this.setSize(500, 300);
 
 		AppFrame.hardness = 2;
 
@@ -47,7 +52,7 @@ public class NewGame extends JFrame {
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
 
-		JLabel hardnessLabel = new JLabel("Game hardness level:  " + AppFrame.hardness);
+		JLabel hardnessLabel = new JLabel("Game difficulty level:  " + AppFrame.hardness);
 		hardnessLabel.setHorizontalAlignment(0);
 		hardnessLabel.setPreferredSize(new Dimension(300, 30));
 		hardnessLabel.setFont(new Font("font1", Font.PLAIN, 20));
@@ -57,18 +62,18 @@ public class NewGame extends JFrame {
 		JSlider slider = new JSlider(0, 10, AppFrame.hardness);
 		slider.setPreferredSize(new Dimension(300, 20));
 		slider.setFocusable(false);
-		slider.setUI(new BasicSliderUI());
 		slider.setSnapToTicks(true);
 		slider.setBorder(null);
 		slider.addChangeListener(changeEvent -> {
 			AppFrame.setHardness(slider.getValue());
-			hardnessLabel.setText("Game hardness level:  " + AppFrame.hardness);
+			hardnessLabel.setText("Game difficulty level:  " + AppFrame.hardness);
 		});
 		slider.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		JPanel bottomPanel = new JPanel();
 		JButton ok = new JButton("OK");
 		ok.addActionListener(submitActionEvent -> {
+			lonely = false;
 			this.dispose();
 			Game game = new Game(null, null);
 			Game.setCurrentStartTime();
@@ -114,6 +119,7 @@ public class NewGame extends JFrame {
 		});
 		JButton ok = new JButton("OK");
 		ok.addActionListener(actionEvent -> {
+			lonely = false;
 			this.dispose();
 			if (!textField.getText().equals("")) {
 				Game game;
@@ -153,7 +159,6 @@ public class NewGame extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 			}
-
 
 			@Override
 			public void keyReleased(KeyEvent e) {

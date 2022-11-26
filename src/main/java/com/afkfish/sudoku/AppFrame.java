@@ -32,7 +32,7 @@ public class AppFrame extends JFrame {
 	 * Constructor for the {@link JFrame} with the {@link Game} inside.
 	 */
 	public AppFrame(Game game) {
-		super("Sudoku v0.10");
+		super("");
 
 		ImageIcon imageIcon = new ImageIcon("assets/icon/sudoku_128x128.png");
 		this.setIconImage(imageIcon.getImage());

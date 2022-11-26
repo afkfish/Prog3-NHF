@@ -18,6 +18,14 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 }
 
+task clean_data {
+    //dependsOn(clean)
+    File gameData = new File("game.dat")
+    File recordData = new File("records.dat")
+    gameData.delete()
+    recordData.delete()
+}
+
 repositories {
     mavenCentral()
 }
