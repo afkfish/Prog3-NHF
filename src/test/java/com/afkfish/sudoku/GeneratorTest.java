@@ -12,8 +12,8 @@ public class GeneratorTest {
 	@Before
 	public void setUp() {
 		n = 15;
-		nGrid = generator.generate(n);
 		generator = new Generator();
+		nGrid = generator.generate(n);
 	}
 
 	@Test
