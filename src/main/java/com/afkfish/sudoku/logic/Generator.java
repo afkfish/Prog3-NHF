@@ -1,4 +1,4 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.logic;
 
 import java.util.Random;
 
@@ -6,13 +6,21 @@ import java.util.Random;
  * A Generator to generate random Sudoku {@link Grid} instances.
  */
 public class Generator {
-	private final Solver solver;
+	private Solver solver;
 
 	/**
 	 * Constructs a new Generator instance.
 	 */
 	public Generator() {
 		this.solver = new Solver();
+	}
+
+	/**
+	 * Generates a random {@link Grid} instance with none of the cells erased.
+	 * @return a random full {@link Grid} instance
+	 */
+	public Grid generate() {
+		return this.generate(0);
 	}
 
 	/**
@@ -27,6 +35,7 @@ public class Generator {
 
 		while (!grid.isFullGrid()) {
 			grid = Grid.emptyGrid();
+			solver = new Solver();
 			solver.solve(grid);
 		}
 

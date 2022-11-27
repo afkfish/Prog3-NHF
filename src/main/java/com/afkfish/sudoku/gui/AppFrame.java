@@ -1,4 +1,9 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui;
+
+import com.afkfish.sudoku.gui.components.ButtonInitializer;
+import com.afkfish.sudoku.logic.Game;
+import com.afkfish.sudoku.logic.Grid;
+import com.afkfish.sudoku.gui.listeners.ChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,13 +61,13 @@ public class AppFrame extends JFrame {
 		this.initMenuBar();
 
 		JPanel border0 = new JPanel();
-		border0.setPreferredSize(new Dimension((windowSize.width-600)/2, windowSize.height));
+		border0.setPreferredSize(new Dimension((windowSize.width-576)/2, windowSize.height));
 		JPanel border1 = new JPanel();
-		border1.setPreferredSize(new Dimension((windowSize.width-600)/2, windowSize.height));
+		border1.setPreferredSize(new Dimension((windowSize.width-576)/2, windowSize.height));
 		JPanel border2 = new JPanel();
-		border2.setPreferredSize(new Dimension(windowSize.width, (windowSize.height-600)/2));
+		border2.setPreferredSize(new Dimension(windowSize.width, (windowSize.height-576)/2));
 		JPanel border3 = new JPanel();
-		border3.setPreferredSize(new Dimension(windowSize.width, (windowSize.height-600)/2));
+		border3.setPreferredSize(new Dimension(windowSize.width, (windowSize.height-576)/2));
 
 		JLabel time = new JLabel("...");
 		time.setForeground(Color.WHITE);
@@ -111,7 +116,7 @@ public class AppFrame extends JFrame {
 		JMenuItem newGame = new JMenuItem("New game");
 		newGame.addActionListener(actionEvent -> {
 			timer.stop();
-			NewGame newGameFrame = new NewGame(this);
+			NewGameFrame newGameFrame = new NewGameFrame(this);
 			newGameFrame.setVisible(true);
 		});
 		newGame.setForeground(Color.WHITE);

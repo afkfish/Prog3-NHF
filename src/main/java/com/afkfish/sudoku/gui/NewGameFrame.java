@@ -1,4 +1,9 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui;
+
+import com.afkfish.sudoku.logic.Game;
+import com.afkfish.sudoku.logic.Grid;
+import com.afkfish.sudoku.Main;
+import com.afkfish.sudoku.gui.listeners.SDropTargetListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,9 +16,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class NewGame extends JFrame {
+/**
+ * A frame that allows the user to start a new game, or import an existing one from file.
+ */
+public class NewGameFrame extends JFrame {
 	private static boolean lonely;
-	public NewGame(AppFrame appFrame) {
+	public NewGameFrame(AppFrame appFrame) {
 		super("Sudoku " + Main.version);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		if (appFrame == null) {

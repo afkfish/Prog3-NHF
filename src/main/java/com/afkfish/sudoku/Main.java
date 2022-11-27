@@ -1,5 +1,10 @@
 package com.afkfish.sudoku;
 
+import com.afkfish.sudoku.gui.AppFrame;
+import com.afkfish.sudoku.gui.NewGameFrame;
+import com.afkfish.sudoku.gui.RecordsDialog;
+import com.afkfish.sudoku.logic.Game;
+import com.afkfish.sudoku.logic.Grid;
 import com.formdev.flatlaf.FlatDarculaLaf;
 
 import javax.swing.*;
@@ -43,11 +48,11 @@ public class Main {
 				AppFrame frame = new AppFrame(game);
 				frame.setVisible(true);
 			} else {
-				NewGame startDialog = new NewGame(null);
+				NewGameFrame startDialog = new NewGameFrame(null);
 				startDialog.setVisible(true);
 			}
 		} catch (IOException | ClassNotFoundException e) {
-			NewGame startDialog = new NewGame(null);
+			NewGameFrame startDialog = new NewGameFrame(null);
 			startDialog.setVisible(true);
 		}
 	}

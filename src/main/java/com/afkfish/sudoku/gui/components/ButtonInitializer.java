@@ -1,4 +1,6 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui.components;
+
+import com.afkfish.sudoku.logic.Grid;
 
 import javax.swing.*;
 import java.awt.*;

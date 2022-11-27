@@ -90,7 +90,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class Grid" class="title">Class Grid</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">com.afkfish.sudoku.Grid</div>
+<div class="inheritance">com.afkfish.sudoku.logic.Grid</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
@@ -107,7 +107,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 <dt>See Also:</dt>
 <dd>
 <ul class="see-list">
-<li><a href="../../../serialized-form.html#com.afkfish.sudoku.Grid">Serialized Form</a></li>
+<li><a href="../../../serialized-form.html#com.afkfish.sudoku.logic.Grid">Serialized Form</a></li>
 </ul>
 </dd>
 </dl>
@@ -139,7 +139,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.afkfish.sudoku.Grid)" class="member-name-link">Grid</a><wbr>(<a href="Grid.html" title="class in com.afkfish.sudoku">Grid</a>&nbsp;grid)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.afkfish.sudoku.logic.Grid)" class="member-name-link">Grid</a><wbr>(<a href="Grid.html" title="class in com.afkfish.sudoku">Grid</a>&nbsp;grid)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -156,7 +156,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compare(com.afkfish.sudoku.Grid,com.afkfish.sudoku.Grid)" class="member-name-link">compare</a><wbr>(<a href="Grid.html" title="class in com.afkfish.sudoku">Grid</a>&nbsp;grid1,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compare(com.afkfish.sudoku.logic.Grid,com.afkfish.sudoku.logic.Grid)" class="member-name-link">compare</a><wbr>(<a href="Grid.html" title="class in com.afkfish.sudoku">Grid</a>&nbsp;grid1,
  <a href="Grid.html" title="class in com.afkfish.sudoku">Grid</a>&nbsp;grid2)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Compares two given <a href="Grid.html" title="class in com.afkfish.sudoku"><code>Grid</code></a>s whether they contain the same numbers.</div>
@@ -181,7 +181,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGrid()" class="member-name-link">getGrid</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="Grid.Cell.html" title="class in com.afkfish.sudoku">Grid.Cell</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNextEmptyCellOf(com.afkfish.sudoku.Grid.Cell)" class="member-name-link">getNextEmptyCellOf</a><wbr>(<a href="Grid.Cell.html" title="class in com.afkfish.sudoku">Grid.Cell</a>&nbsp;cell)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNextEmptyCellOf(com.afkfish.sudoku.logic.Grid.Cell)" class="member-name-link">getNextEmptyCellOf</a><wbr>(<a href="Grid.Cell.html" title="class in com.afkfish.sudoku">Grid.Cell</a>&nbsp;cell)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the next empty <a href="Grid.Cell.html" title="class in com.afkfish.sudoku"><code>Grid.Cell</code></a> consecutively to the given <a href="Grid.Cell.html" title="class in com.afkfish.sudoku"><code>Grid.Cell</code></a> in this Grid.</div>
 </div>
@@ -196,7 +196,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 <div class="block">Checks whether a <a href="Grid.html" title="class in com.afkfish.sudoku"><code>Grid</code></a>'s <a href="Grid.Cell.html" title="class in com.afkfish.sudoku"><code>Grid.Cell</code></a>s are all have numbers in them.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isValidValueForCell(com.afkfish.sudoku.Grid.Cell,int)" class="member-name-link">isValidValueForCell</a><wbr>(<a href="Grid.Cell.html" title="class in com.afkfish.sudoku">Grid.Cell</a>&nbsp;cell,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isValidValueForCell(com.afkfish.sudoku.logic.Grid.Cell,int)" class="member-name-link">isValidValueForCell</a><wbr>(<a href="Grid.Cell.html" title="class in com.afkfish.sudoku">Grid.Cell</a>&nbsp;cell,
  int&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Checks if a given value is valid for a certain <a href="Grid.Cell.html" title="class in com.afkfish.sudoku"><code>Grid.Cell</code></a>.</div>
@@ -229,7 +229,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.afkfish.sudoku.Grid)">
+<section class="detail" id="&lt;init&gt;(com.afkfish.sudoku.logic.Grid)">
 <h3>Grid</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Grid</span><wbr><span class="parameters">(<a href="Grid.html" title="class in com.afkfish.sudoku">Grid</a>&nbsp;grid)</span></div>
 </section>
@@ -262,7 +262,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 </section>
 </li>
 <li>
-<section class="detail" id="compare(com.afkfish.sudoku.Grid,com.afkfish.sudoku.Grid)">
+<section class="detail" id="compare(com.afkfish.sudoku.logic.Grid,com.afkfish.sudoku.logic.Grid)">
 <h3>compare</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="Grid.html" title="class in com.afkfish.sudoku">Grid</a>&nbsp;grid1,
  <a href="Grid.html" title="class in com.afkfish.sudoku">Grid</a>&nbsp;grid2)</span></div>
@@ -327,7 +327,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 </section>
 </li>
 <li>
-<section class="detail" id="isValidValueForCell(com.afkfish.sudoku.Grid.Cell,int)">
+<section class="detail" id="isValidValueForCell(com.afkfish.sudoku.logic.Grid.Cell,int)">
 <h3>isValidValueForCell</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isValidValueForCell</span><wbr><span class="parameters">(<a href="Grid.Cell.html" title="class in com.afkfish.sudoku">Grid.Cell</a>&nbsp;cell,
  int&nbsp;value)</span></div>
@@ -355,7 +355,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 </section>
 </li>
 <li>
-<section class="detail" id="getNextEmptyCellOf(com.afkfish.sudoku.Grid.Cell)">
+<section class="detail" id="getNextEmptyCellOf(com.afkfish.sudoku.logic.Grid.Cell)">
 <h3>getNextEmptyCellOf</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="Grid.Cell.html" title="class in com.afkfish.sudoku">Grid.Cell</a>&gt;</span>&nbsp;<span class="element-name">getNextEmptyCellOf</span><wbr><span class="parameters">(<a href="Grid.Cell.html" title="class in com.afkfish.sudoku">Grid.Cell</a>&nbsp;cell)</span></div>
 <div class="block">Returns the next empty <a href="Grid.Cell.html" title="class in com.afkfish.sudoku"><code>Grid.Cell</code></a> consecutively to the given <a href="Grid.Cell.html" title="class in com.afkfish.sudoku"><code>Grid.Cell</code></a> in this Grid.

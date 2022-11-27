@@ -1,4 +1,11 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui.listeners;
+
+import com.afkfish.sudoku.gui.components.ButtonInitializer;
+import com.afkfish.sudoku.logic.Game;
+import com.afkfish.sudoku.logic.Grid;
+import com.afkfish.sudoku.gui.AppFrame;
+import com.afkfish.sudoku.gui.components.NumberButton;
+import com.afkfish.sudoku.gui.RecordsDialog;
 
 import javax.swing.*;
 import java.awt.*;

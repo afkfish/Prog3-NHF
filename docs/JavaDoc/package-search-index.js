@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.afkfish.sudoku"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.afkfish.sudoku"},{"l":"com.afkfish.sudoku.gui"},{"l":"com.afkfish.sudoku.gui.components"},{"l":"com.afkfish.sudoku.gui.listeners"},{"l":"com.afkfish.sudoku.logic"}];updateSearchResults();

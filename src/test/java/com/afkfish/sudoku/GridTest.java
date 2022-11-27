@@ -1,42 +1,32 @@
 package com.afkfish.sudoku;
 
-import org.junit.*;
+import com.afkfish.sudoku.logic.Grid;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-@FixMethodOrder
 public class GridTest {
-	Generator generator;
 	Grid grid;
-	int n;
-
+	Collection<Grid.Cell> collection;
 
 	@Before
-	public void setUp() {
-		generator = new Generator();
+	public void setUpGrids() {
 		grid = Grid.emptyGrid();
-		n = 15;
+
+		collection = new ArrayList<>();
+		for (int i = 1; i < grid.getSize(); i++) {
+			collection.add(grid.getCell(0,i));
+		}
 	}
 
 	@Test
 	public void emptyGrid() {
 		Assert.assertFalse(grid.isFullGrid());
 		Assert.assertEquals(Optional.of(grid.getCell(0,0)), grid.getFirstEmptyCell());
-	}
-
-	@Test
-	public void nEmptyCells() {
-		grid = generator.generate(n);
-
-		int empty = 0;
-		for (int i = 0; i < grid.getSize(); i++)
-			for (int j = 0; j < grid.getSize(); j++)
-				if (grid.getCell(i, j).isEmpty())
-					++empty;
-
-		Assert.assertEquals(n, empty);
 	}
 
 	@Test
@@ -48,12 +38,6 @@ public class GridTest {
 	@Test
 	public void cellNeighbor() {
 		Assert.assertEquals(grid.getCell(0, 1), grid.getCell(0,0).getNextCell());
-
-		Collection<Grid.Cell> collection = new ArrayList<>();
-		for (int i = 1; i < grid.getSize(); i++) {
-			collection.add(grid.getCell(0,i));
-		}
-
 		Assert.assertEquals(collection, grid.getCell(0,0).getRowNeighbors());
 	}
 }

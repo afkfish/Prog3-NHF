@@ -1,4 +1,4 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui.components;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -20,7 +20,7 @@ public class RoundButtonUI extends BasicButtonUI {
 		super.update(g, c);
 		if (c.isOpaque()) {
 			g.setColor(this.color);
-			g.fillOval(0, 0, c.getWidth(), c.getHeight());
+			g.fillOval(6, 5, (int) (c.getWidth()*0.8), (int) (c.getWidth()*0.8));
 		}
 		paint(g, c);
 	}

@@ -1,4 +1,4 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui;
 
 import javax.swing.*;
 import java.awt.*;

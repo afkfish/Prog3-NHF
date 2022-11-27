@@ -1,4 +1,4 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.logic;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +26,10 @@ public class Grid implements Serializable {
 		}
 	}
 
+	/**
+	 * Returns the grid of cells in a 2d array.
+	 * @return the 2d array.
+	 */
 	public Cell[][] getGrid() {
 		return grid;
 	}
@@ -95,6 +99,20 @@ public class Grid implements Serializable {
 		}
 
 		return new Grid(cells);
+	}
+
+	/**
+	 * Creates a deep copy of the Grid.
+	 * @return {@link Grid}
+	 */
+	public Grid copy() {
+		int[][] cells = new int[9][9];
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				cells[i][j] = this.grid[i][j].getValue();
+			}
+		}
+		return Grid.of(cells);
 	}
 
 	/**

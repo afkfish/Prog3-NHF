@@ -1,4 +1,4 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui.listeners;
 
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * A class that handles the dropping of files onto the app when the user is on the import game screen.
+ */
 public class SDropTargetListener implements DropTargetListener {
 	private final JTextField textField;
 

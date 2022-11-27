@@ -1,4 +1,7 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.logic;
+
+import com.afkfish.sudoku.gui.AppFrame;
+import com.afkfish.sudoku.gui.components.ButtonInitializer;
 
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -12,8 +15,8 @@ import java.io.ObjectOutputStream;
  */
 public class Game {
 	private final ButtonInitializer buttonInitializer;
-	private Grid active;
-	private Grid solved;
+	private final Grid active;
+	private final Grid solved;
 	private static long currentStartTime;
 	private static long elapsedTime = 0;
 
@@ -24,12 +27,10 @@ public class Game {
 		int hardness = AppFrame.hardness;
 
 		if (active == null || solved == null) {
-			this.solved = Grid.emptyGrid();
-
 			Generator generator = new Generator();
-			this.solved = generator.generate(0);
+			this.solved = generator.generate();
 
-			this.active = new Grid(this.solved);
+			this.active = this.solved.copy();
 			Generator.eraseCells(this.active, hardness * 4 + 6);
 		} else {
 			this.active = active;
@@ -38,7 +39,8 @@ public class Game {
 
 		this.buttonInitializer = new ButtonInitializer(this.active);
 		this.buttonInitializer.setBorder(new LineBorder(Color.GRAY, 2, true));
-		this.buttonInitializer.setPreferredSize(new Dimension(600,600));
+		this.buttonInitializer.setMinimumSize(new Dimension(576, 576));
+		this.buttonInitializer.setPreferredSize(new Dimension(576,576));
 	}
 
 	/**
@@ -68,7 +70,7 @@ public class Game {
 
 
 	public static int timeSinceGameStart() {
-		return (int)(elapsedTime * 1000 + System.currentTimeMillis() - currentStartTime) / 1000;
+		return (int)(elapsedTime + (System.currentTimeMillis() - currentStartTime) / 1000);
 	}
 
 	/**
@@ -83,7 +85,7 @@ public class Game {
 			oos.writeInt(AppFrame.hardness);
 			oos.close();
 		} catch (IOException e) {
-			System.err.println(e);
+			e.printStackTrace();
 		}
 	}
 }

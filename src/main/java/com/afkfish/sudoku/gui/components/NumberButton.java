@@ -1,4 +1,6 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui.components;
+
+import com.afkfish.sudoku.logic.Grid;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalButtonUI;
@@ -45,7 +47,8 @@ public class NumberButton extends JButton {
 			});
 		}
 
-		this.setPreferredSize(new Dimension(25, 25));
+		this.setMinimumSize(new Dimension(64, 64));
+		this.setPreferredSize(new Dimension(64, 64));
 		this.setAlignmentY(0.5F);
 		this.setOpaque(true);
 		this.setFont(new Font("arial", Font.PLAIN, 20));

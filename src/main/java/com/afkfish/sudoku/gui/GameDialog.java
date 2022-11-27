@@ -1,4 +1,6 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui;
+
+import com.afkfish.sudoku.logic.Game;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;

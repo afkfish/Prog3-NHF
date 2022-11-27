@@ -1,1 +1,5 @@
 com.afkfish.sudoku
+com.afkfish.sudoku.gui
+com.afkfish.sudoku.gui.components
+com.afkfish.sudoku.gui.listeners
+com.afkfish.sudoku.logic

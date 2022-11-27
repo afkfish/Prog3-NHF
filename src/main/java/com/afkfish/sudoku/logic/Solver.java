@@ -1,4 +1,4 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.logic;
 
 import java.util.Optional;
 import java.util.Random;

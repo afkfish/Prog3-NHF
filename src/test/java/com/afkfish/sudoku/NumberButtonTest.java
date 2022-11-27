@@ -1,6 +1,10 @@
 package com.afkfish.sudoku;
 
+import com.afkfish.sudoku.gui.components.ButtonInitializer;
+import com.afkfish.sudoku.logic.Generator;
+import com.afkfish.sudoku.logic.Grid;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
@@ -10,7 +14,8 @@ public class NumberButtonTest {
 	Grid solved;
 	ButtonInitializer buttonInitializer;
 
-	{
+	@Before
+	public void setUp() {
 		this.solved = Grid.emptyGrid();
 
 		while(!this.solved.isFullGrid()) {

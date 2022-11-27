@@ -1,7 +1,6 @@
-package com.afkfish.sudoku;
+package com.afkfish.sudoku.gui;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
